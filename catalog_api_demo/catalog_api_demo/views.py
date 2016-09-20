@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response
 
 
-def here(request, a, b):
-	return render_to_response('here.html', locals())
+def catalog_api_demo(request):
+	return render_to_response('catalog_api_demo.html')

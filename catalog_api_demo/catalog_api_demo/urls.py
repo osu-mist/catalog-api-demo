@@ -16,9 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from views import here
+from views import catalog_api_demo
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^here/(\d{1,2})/(\d{1,2})/$', here),
+    url(r'^catalog_api_demo/$', catalog_api_demo),
 ]
