@@ -17,7 +17,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from views import catalog_api_demo
+from access_token.views import access_token
 
 urlpatterns = [
     url(r'^catalog_api_demo/$', catalog_api_demo),
+    url(r'^access_token/')
 ]
