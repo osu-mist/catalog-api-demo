@@ -1,1 +1,4 @@
 *.pyc
+
+# configuration
+configuration.json
