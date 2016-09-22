@@ -51,6 +51,6 @@ def catalog_api_demo(request):
 		page_num    = form.cleaned_data['page_num']
 		request_url = get_courses_url(request_url, term, subject, course_num, q, page_size, page_num)
 	else:
-		print "not valid"
+		print "Form is not valid."
 	response = requests.get(request_url, headers=headers).json()
 	return render_to_response('catalog_api_demo.html', locals(), RequestContext(request))
