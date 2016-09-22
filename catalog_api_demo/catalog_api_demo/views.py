@@ -14,7 +14,7 @@ def get_access_token(token_url, client_id, client_secret):
 	return token_resp.json()['access_token']
 
 
-def get_courses_url(request_url, term, subject=None, course_num=None, q=None, page_size=None, page_num=None):
+def get_courses_url(request_url, term, subject, course_num, q, page_size, page_num):
 	endpoint    = '/courses'
 	request_url += endpoint + '?term=' + term
 	if subject is not None:
@@ -50,5 +50,7 @@ def catalog_api_demo(request):
 		page_size  = form.cleaned_data['page_size']
 		page_num   = form.cleaned_data['page_num']
 		request_url = get_courses_url(request_url, term, subject, course_num, q, page_size, page_num)
+	else:
+		print "not valid"
 	response = requests.get(request_url, headers=headers).json()
 	return render_to_response('catalog_api_demo.html', locals(), RequestContext(request))
