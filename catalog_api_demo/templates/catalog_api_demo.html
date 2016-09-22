@@ -5,12 +5,21 @@
 </head>
 <body>
 	<h1>Catelog API Demo</h1>
-	<p>Request Endpoint: {{ request_url }}</p>
+	Request Endpoint:<br>
+	{{ request_url }}
 	
-	<form action="http://localhost:8000/catalog_api_demo/" method="GET">
-		<input type="text" name="text_name"><br>
+	<form action="" method="POST">{% csrf_token %}
+		<label for="term">Term:</label>
+		<input type="text" name="term"><br>
+		<label for="subject">Subject:</label>
+		<input type="text" name="subject"><br>
+		<label for="course_number">Course Number:</label>
+		<input type="text" name="course_number"><br>
 		<input type="submit" value="Submit!">
 	</form>
+
+	Response:<br>
+	{{ response }}
 
 </body>
 </html>

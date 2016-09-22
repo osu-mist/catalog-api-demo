@@ -1,4 +1,6 @@
 from django.shortcuts import render_to_response
+from django.template import RequestContext
+from .forms import CourseForm
 
 import json
 import requests
@@ -14,7 +16,7 @@ def get_access_token(token_url, client_id, client_secret):
 
 
 def catalog_api_demo(request):
-	config_file   = open("../configuration.json")
+	config_file   = open('../configuration.json')
 	config_data   = json.load(config_file)
 	base_url      = config_data['hostname'] + config_data['version'] + config_data['api']
 	token_url     = base_url + config_data['token_endpoint']
@@ -23,7 +25,14 @@ def catalog_api_demo(request):
 	access_token  = get_access_token(token_url, client_id, client_secret)
 
 	headers = {'Authorization': 'Bearer ' + access_token}
-	request_url = base_url + '/courses?term=201701&subject=CS&courseNumber=101'
-	response = requests.get(request_url, headers=headers).json()
 
-	return render_to_response('catalog_api_demo.html', locals())
+	request_url = base_url
+	if request.method == 'POST':
+		form = CourseForm(request.POST)
+		if form.is_valid():
+			term          = form.cleaned_data['term']
+			subject       = form.cleaned_data['subject']
+			course_number = form.cleaned_data['course_number']
+			request_url += '/courses?term=' + term + '&subject=' + subject + '&courseNumber=' + course_number
+	response = requests.get(request_url, headers=headers).json()
+	return render_to_response('catalog_api_demo.html', locals(), RequestContext(request))
