@@ -6,6 +6,11 @@
 <body>
 	<h1>Catelog API Demo</h1>
 	<p>Request Endpoint: {{ request_url }}</p>
-	<p>Response: {{ response }}</p>
+	
+	<form action="http://localhost:8000/catalog_api_demo/" method="GET">
+		<input type="text" name="text_name"><br>
+		<input type="submit" value="Submit!">
+	</form>
+
 </body>
 </html>

@@ -23,7 +23,7 @@ def catalog_api_demo(request):
 	access_token  = get_access_token(token_url, client_id, client_secret)
 
 	headers = {'Authorization': 'Bearer ' + access_token}
-	request_url = base_url + '/terms'
+	request_url = base_url + '/courses?term=201701&subject=CS&courseNumber=101'
 	response = requests.get(request_url, headers=headers).json()
 
 	return render_to_response('catalog_api_demo.html', locals())
