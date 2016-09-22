@@ -43,12 +43,12 @@ def catalog_api_demo(request):
 
 	form = CourseForm(request.POST)
 	if form.is_valid():
-		term       = form.cleaned_data['term']
-		subject    = form.cleaned_data['subject']
-		course_num = form.cleaned_data['course_num']
-		q          = form.cleaned_data['q']
-		page_size  = form.cleaned_data['page_size']
-		page_num   = form.cleaned_data['page_num']
+		term        = form.cleaned_data['term']
+		subject     = form.cleaned_data['subject']
+		course_num  = form.cleaned_data['course_num']
+		q           = form.cleaned_data['q']
+		page_size   = form.cleaned_data['page_size']
+		page_num    = form.cleaned_data['page_num']
 		request_url = get_courses_url(request_url, term, subject, course_num, q, page_size, page_num)
 	else:
 		print "not valid"
