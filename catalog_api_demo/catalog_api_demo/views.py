@@ -28,9 +28,12 @@ def catalog_api_demo(request):
 	if request.method == 'POST':
 		form = CourseForm(request.POST)
 		if form.is_valid():
-			term          = form.cleaned_data['term']
-			subject       = form.cleaned_data['subject']
-			course_number = form.cleaned_data['course_number']
-			request_url += '/courses?term=' + term + '&subject=' + subject + '&courseNumber=' + course_number
+			term       = form.cleaned_data['term']
+			subject    = form.cleaned_data['subject']
+			course_num = form.cleaned_data['course_num']
+			q          = form.cleaned_data['q']
+			page_size  = form.cleaned_data['page_size']
+			page_num   = form.cleaned_data['page_num']
+			request_url += '/courses?term=' + term + '&subject=' + subject + '&courseNumber=' + course_num + '&q=' + q + '&page[size]=' + page_size + '&page[num]=' + page_num
 	response = requests.get(request_url, headers=headers).json()
 	return render_to_response('catalog_api_demo.html', locals(), RequestContext(request))
