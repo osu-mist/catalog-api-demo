@@ -4,11 +4,9 @@
 	<title>Catelog API Demo</title>
 </head>
 <body>
-	<h1>Catelog API Demo</h1>
-	Request Endpoint:<br>
-	{{ request_url }}<br>
+	<h1>Class Search API</h1>
+	Request Endpoint: {{ request_url }}<br>
 	
-	Class Search:<br>
 	<form action="" method="POST">{% csrf_token %}
 		<label for="term">Term:</label>
 		<input type="text" name="term" required><br>
@@ -25,8 +23,10 @@
 		<input type="submit" value="Submit!">
 	</form>
 
-	Response:<br>
-	{{ response }}
-
+	{% if response.status != 400 %}
+		<hr>
+		Response:<br>
+		{{ response }}
+	{% endif %}
 </body>
 </html>
