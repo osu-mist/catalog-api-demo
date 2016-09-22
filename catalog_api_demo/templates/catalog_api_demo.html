@@ -6,12 +6,12 @@
 <body>
 	<h1>Catelog API Demo</h1>
 	Request Endpoint:<br>
-	{{ request_url }}
+	{{ request_url }}<br>
 	
-	Class Search:
+	Class Search:<br>
 	<form action="" method="POST">{% csrf_token %}
 		<label for="term">Term:</label>
-		<input type="text" name="term"><br>
+		<input type="text" name="term" required><br>
 		<label for="subject">Subject:</label>
 		<input type="text" name="subject"><br>
 		<label for="course_num">Course Number:</label>
