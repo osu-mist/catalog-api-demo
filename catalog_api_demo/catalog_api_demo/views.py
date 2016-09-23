@@ -17,15 +17,15 @@ def get_access_token(token_url, client_id, client_secret):
 def get_courses_url(request_url, term, subject, course_num, q, page_size, page_num):
 	endpoint    = '/courses'
 	request_url += endpoint + '?term=' + term
-	if subject is not None:
+	if subject != '':
 		request_url += '&subject=' + subject
-	if course_num is not None:
+	if course_num != '':
 		request_url += '&courseNumber=' + course_num
-	if q is not None:
+	if q != '':
 		request_url += '&q=' + q
-	if page_size is not None:
+	if page_size != '':
 		request_url += '&page[size]=' + page_size
-	if page_num is not None:
+	if page_num != '':
 		request_url += '&page[number]=' + page_num
 	return request_url
 
