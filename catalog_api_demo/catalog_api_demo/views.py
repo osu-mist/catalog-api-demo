@@ -53,4 +53,4 @@ def catalog_api_demo(request):
 	else:
 		print "Form is not valid."
 	response = requests.get(request_url, headers=headers).json()
-	return render_to_response('catalog_api_demo.html', locals(), RequestContext(request))
+	return render_to_response('catalog_api_demo/index.html', locals(), RequestContext(request))
