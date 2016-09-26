@@ -40,9 +40,11 @@
 			Course Number: {{ course.attributes.courseNumber }}<br>
 			Course CRN: {{ course.attributes.crn }}<br>
 			Course Campus: {{ course.attributes.campusDescription }}<br>
-			Course Term: {{ course.attributes.termDescription }}
+			Course Term: {{ course.attributes.termDescription }}<br>
 			Course Duration: {{ course.attributes.termWeeks }}: {{ course.attributes.termStartDate }} - {{ course.attributes.termEndDate }}<br>
-			Instructor: {{ course.attributes.faculty }}<br>
+			{% for faculty in course.attributes.faculty %}
+			Instructor: {{ faculty.displayName }}<br>
+			{% endfor %}
 			<hr>
 		{% endfor %}
 		<h3>Links</h3>
