@@ -4,6 +4,7 @@ from .forms import CourseForm
 
 import json
 import requests
+from pprint import pprint
 
 
 def get_access_token(token_url, client_id, client_secret):
@@ -30,6 +31,13 @@ def get_courses_url(request_url, term, subject, course_num, q, page_size, page_n
 	return request_url
 
 
+def get_courses_details(response):
+	response_data = response.json()['data']
+	response_links = response.json()['links']
+	pprint(json.loads(response.text))
+	return response_data, response_links
+
+
 def catalog_api_demo(request):
 	config_file   = open('../configuration.json')
 	config_data   = json.load(config_file)
@@ -52,5 +60,7 @@ def catalog_api_demo(request):
 		request_url = get_courses_url(request_url, term, subject, course_num, q, page_size, page_num)
 	else:
 		print "Form is not valid."
-	response = requests.get(request_url, headers=headers).json()
+	response = requests.get(request_url, headers=headers)
+	data, links = get_courses_details(response)
+
 	return render_to_response('catalog_api_demo/index.html', locals(), RequestContext(request))

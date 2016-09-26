@@ -26,10 +26,21 @@
 		<input type="submit" value="Submit!">
 	</form>
 
-	{% if response.status != 400 %}
 		<hr>
-		Response:<br>
-		{{ response }}
-	{% endif %}
+		<h3>data:</h3>
+		{% for course in data %}
+			<h4>Course ID:</h4>
+			{{ course.id }}<br>
+			<h4>Course Links:</h4>
+			{{ course.links }}<br>
+			<h4>Course Type:</h4>
+			{{ course.type }}<br>
+			<h4>Course Attributes:</h4>
+			{{ course.attributes }}<br>
+			<hr>
+		{% endfor %}
+		<h3>links</h3>
+		{{ links }}
+
 </body>
 </html>
