@@ -41,7 +41,7 @@
 			Course CRN: {{ course.attributes.crn }}<br>
 			Course Campus: {{ course.attributes.campusDescription }}<br>
 			Course Term: {{ course.attributes.termDescription }}<br>
-			Course Duration: {{ course.attributes.termWeeks }}: {{ course.attributes.termStartDate }} - {{ course.attributes.termEndDate }}<br>
+			Course Duration: {{ course.attributes.termWeeks }} weeks: {{ course.attributes.termStartDate }} - {{ course.attributes.termEndDate }}<br>
 			{% for faculty in course.attributes.faculty %}
 			Instructor: {{ faculty.displayName }}<br>
 			{% endfor %}
