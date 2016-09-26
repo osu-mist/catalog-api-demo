@@ -32,7 +32,7 @@ def get_courses_url(request_url, term, subject, course_num, q, page_size, page_n
 
 
 def get_courses_details(response):
-	response_data = response.json()['data']
+	response_data  = response.json()['data']
 	response_links = response.json()['links']
 	pprint(json.loads(response.text))
 	return response_data, response_links
@@ -60,7 +60,7 @@ def catalog_api_demo(request):
 		request_url = get_courses_url(request_url, term, subject, course_num, q, page_size, page_num)
 	else:
 		print "Form is not valid."
-	response = requests.get(request_url, headers=headers)
+	response    = requests.get(request_url, headers=headers)
 	data, links = get_courses_details(response)
 
 	return render_to_response('catalog_api_demo/index.html', locals(), RequestContext(request))

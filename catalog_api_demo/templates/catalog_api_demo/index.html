@@ -27,7 +27,7 @@
 	</form>
 
 		<hr>
-		<h3>data:</h3>
+		<h3>Data:</h3>
 		{% for course in data %}
 			<h4>Course ID:</h4>
 			{{ course.id }}<br>
@@ -36,10 +36,16 @@
 			<h4>Course Type:</h4>
 			{{ course.type }}<br>
 			<h4>Course Attributes:</h4>
-			{{ course.attributes }}<br>
+			Course: Title: {{ course.attributes.courseTitle }}<br>
+			Course Number: {{ course.attributes.courseNumber }}<br>
+			Course CRN: {{ course.attributes.crn }}<br>
+			Course Campus: {{ course.attributes.campusDescription }}<br>
+			Course Term: {{ course.attributes.termDescription }}
+			Course Duration: {{ course.attributes.termWeeks }}: {{ course.attributes.termStartDate }} - {{ course.attributes.termEndDate }}<br>
+			Instructor: {{ course.attributes.faculty }}<br>
 			<hr>
 		{% endfor %}
-		<h3>links</h3>
+		<h3>Links</h3>
 		{{ links }}
 
 </body>
