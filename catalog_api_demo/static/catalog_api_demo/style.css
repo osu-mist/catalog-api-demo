@@ -2,3 +2,11 @@ body {
 	color: black;
 	padding: 20px;	
 }
+
+table {
+	margin: 1em 0px;
+}
+
+table tr th {
+	padding: 0.5em;
+}

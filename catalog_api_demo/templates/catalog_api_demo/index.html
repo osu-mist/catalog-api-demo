@@ -9,26 +9,40 @@
 <body>
 	<h1>Class Search API</h1>
 	Request Endpoint: {{ request_url }}<br>
-	
+
 	<form action="" method="POST">{% csrf_token %}
-		<label for="term">Term:</label>
-		<input type="text" name="term" required><br>
-		<label for="subject">Subject:</label>
-		<input type="text" name="subject"><br>
-		<label for="course_num">Course Number:</label>
-		<input type="text" name="course_num"><br>
-		<label for="q">Query:</label>
-		<input type="text" name="q"><br>
-		<label for="page_size">Page Size:</label>
-		<input type="text" name="page_size"><br>
-		<label for="page_num">Page Number:</label>
-		<input type="text" name="page_num"><br>
-		<input type="submit" value="Submit!">
+		<table>
+			<tr>
+				<th><label for="term">Term</label></th>
+				<th><input type="text" name="term" required></th> 
+			</tr>
+			<tr>
+				<th><label for="subject">Subject</label></th>
+				<th><input type="text" name="subject"></th> 
+			</tr>
+			<tr>
+				<th><label for="course_num">Course Number</label></th>
+				<th><input type="text" name="course_num"></th> 
+			</tr>
+			<tr>
+				<th><label for="q">Query</label></th>
+				<th><input type="text" name="q"></th> 
+			</tr>
+			<tr>
+				<th><label for="page_size">Page Size</label></th>
+				<th><input type="text" name="page_size"></th> 
+			</tr>
+			<tr>
+				<th><label for="page_num">Page Number</label></th>
+				<th><input type="text" name="page_num"></th> 
+			</tr>
+		</table>
 	</form>
+	<input type="submit" value="Submit">
 
 		<hr>
 		{% if form_is_valid %}
-			<h3>Result:</h3>
+			<h3>Total {{ data | length }} Result(s)</h3>
 			{% for course in data %}
 				<h4>Course ID (CRN): {{ course.id }}</h4>
 				<h4>Course Details:</h4>
