@@ -13,8 +13,12 @@
 	<form action="" method="POST">{% csrf_token %}
 		<table>
 			<tr>
+				<th><label for="year">Year</label></th>
+				<th><input type="text" name="year"></th> 
+			</tr>
+			<tr>
 				<th><label for="term">Term</label></th>
-				<th><input type="text" name="term" required></th> 
+				<th><input class="term-list" type="radio" name="term" value="fall">Fall<input class="term-list" type="radio" name="term" value="winter">Winter<input class="term-list" type="radio" name="term" value="spring">Spring<input class="term-list" type="radio" name="term" value="summer">Summer</th>
 			</tr>
 			<tr>
 				<th><label for="subject">Subject</label></th>

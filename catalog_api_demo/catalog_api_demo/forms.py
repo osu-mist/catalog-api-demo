@@ -2,6 +2,7 @@ from django import forms
 
 
 class CourseForm(forms.Form):
+	year       = forms.CharField(label='year', required=True)
 	term       = forms.CharField(label='term', required=True)
 	subject    = forms.CharField(label='subject', required=False)
 	course_num = forms.CharField(label='course_num', required=False)

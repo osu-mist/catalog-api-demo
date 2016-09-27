@@ -15,9 +15,25 @@ def get_access_token(token_url, client_id, client_secret):
 	return token_resp.json()['access_token']
 
 
-def get_courses_url(request_url, term, subject, course_num, q, page_size, page_num):
+def get_term_code(year, term):
+	if term == 'fall':
+		year     = int(year) + 1
+		term_idx = '01'
+	elif term == 'winter':
+		term_idx = '02'
+	elif term == 'spring':
+		term_idx = '03'
+	elif term == 'summer':
+		term_idx = '04'
+
+	term_code = str(year) + term_idx
+	return term_code
+
+
+def get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num):
 	endpoint    = '/courses'
-	request_url += endpoint + '?term=' + term
+
+	request_url += endpoint + '?term=' + term_code
 	if subject != '':
 		request_url += '&subject=' + subject
 	if course_num != '':
@@ -52,13 +68,15 @@ def catalog_api_demo(request):
 	form          = CourseForm(request.POST)
 	form_is_valid = form.is_valid()
 	if form_is_valid:
+		year        = form.cleaned_data['year']
 		term        = form.cleaned_data['term']
+		term_code   = get_term_code(year, term)
 		subject     = form.cleaned_data['subject']
 		course_num  = form.cleaned_data['course_num']
 		q           = form.cleaned_data['q']
 		page_size   = form.cleaned_data['page_size']
 		page_num    = form.cleaned_data['page_num']
-		request_url = get_courses_url(request_url, term, subject, course_num, q, page_size, page_num)
+		request_url = get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num)
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_courses_details(response)
 	else:
