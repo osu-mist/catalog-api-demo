@@ -49,8 +49,9 @@ def catalog_api_demo(request):
 	access_token  = get_access_token(token_url, client_id, client_secret)
 	headers       = {'Authorization': 'Bearer ' + access_token}
 
-	form = CourseForm(request.POST)
-	if form.is_valid():
+	form          = CourseForm(request.POST)
+	form_is_valid = form.is_valid()
+	if form_is_valid:
 		term        = form.cleaned_data['term']
 		subject     = form.cleaned_data['subject']
 		course_num  = form.cleaned_data['course_num']
@@ -58,9 +59,9 @@ def catalog_api_demo(request):
 		page_size   = form.cleaned_data['page_size']
 		page_num    = form.cleaned_data['page_num']
 		request_url = get_courses_url(request_url, term, subject, course_num, q, page_size, page_num)
+		response    = requests.get(request_url, headers=headers)
+		data, links = get_courses_details(response)
 	else:
 		print "Form is not valid."
-	response    = requests.get(request_url, headers=headers)
-	data, links = get_courses_details(response)
 
 	return render_to_response('catalog_api_demo/index.html', locals(), RequestContext(request))

@@ -27,28 +27,43 @@
 	</form>
 
 		<hr>
-		<h3>Data:</h3>
-		{% for course in data %}
-			<h4>Course ID:</h4>
-			{{ course.id }}<br>
-			<h4>Course Links:</h4>
-			{{ course.links }}<br>
-			<h4>Course Type:</h4>
-			{{ course.type }}<br>
-			<h4>Course Attributes:</h4>
-			Course: Title: {{ course.attributes.courseTitle }}<br>
-			Course Number: {{ course.attributes.courseNumber }}<br>
-			Course CRN: {{ course.attributes.crn }}<br>
-			Course Campus: {{ course.attributes.campusDescription }}<br>
-			Course Term: {{ course.attributes.termDescription }}<br>
-			Course Duration: {{ course.attributes.termWeeks }} weeks: {{ course.attributes.termStartDate }} - {{ course.attributes.termEndDate }}<br>
-			{% for faculty in course.attributes.faculty %}
-			Instructor: {{ faculty.displayName }}<br>
+		{% if form_is_valid %}
+			<h3>Result:</h3>
+			{% for course in data %}
+				<h4>Course ID (CRN): {{ course.id }}</h4>
+				<h4>Course Details:</h4>
+					Title: {{ course.attributes.courseTitle }}<br>
+					Subject: {{ course.attributes.subjectDescription }}<br>
+					Course Number: {{ course.attributes.subject }} {{ course.attributes.courseNumber }}<br>
+					Section: {{ course.attributes.section }}<br>
+					Credit Hours: {{ course.attributes.creditHours }}<br>
+					Campus: {{ course.attributes.campusDescription }}<br>
+					Term: {{ course.attributes.termDescription }}<br>
+					Duration: {{ course.attributes.termStartDate }} - {{ course.attributes.termEndDate }} ({{ course.attributes.termWeeks }} weeks)<br>
+					{% for faculty in course.attributes.faculty %}
+						Instructor: {{ faculty.displayName }}<br>
+					{% endfor %}
+					{% for meeting in course.attributes.meetingTimes %}
+						Location: {{ meeting.buildingName }} ({{ meeting.building }})<br>
+						Room: {{ meeting.room }}<br>
+						Time: {% if meeting.monday %}M{% endif %}{% if meeting.tuesday %}T{% endif %}{% if meeting.wednesday %}W{% endif %}{% if meeting.thursday %}R{% endif %}{% if meeting.friday %}F{% endif %}
+						{{ meeting.startTime }} - {{ meeting.endTime }}<br>	
+					{% endfor %}
+					Scheduled Type: {{ course.attributes.scheduleTypeDescription }}<br>
+					Maximum Enrollment: {{ course.attributes.maximumEnrollment }}<br>
+					Current Enrollment: {{ course.attributes.enrollment }}<br>
+					Status: {{ course.attributes.status }}<br>
+						{% if course.attributes.status == "Waitlisted" %}
+						Wait Capacity: {{ course.attributes.waitCapacity }}<br>
+						Wait Count: {{ course.attributes.waitCount }}<br>
+						{% endif %}
+				{% if course.links %}
+					<h4>Course Links:</h4>
+					{{ course.links }}<br>
+				{% endif %}
+				<hr>
 			{% endfor %}
-			<hr>
-		{% endfor %}
-		<h3>Links</h3>
-		{{ links }}
+		{% endif %}
 
 </body>
 </html>
