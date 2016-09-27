@@ -31,8 +31,8 @@ def get_term_code(year, term):
 
 def get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num):
 	endpoint    = '/courses'
-
 	request_url += endpoint + '?term=' + term_code
+
 	if subject != '':
 		request_url += '&subject=' + subject
 	if course_num != '':
@@ -61,6 +61,7 @@ def get_courses_details(response):
 
 def class_search_api(request):
 	global config_file, api_url, access_token, headers
+	request_url = api_url
 
 	form          = CourseForm(request.POST)
 	form_is_valid = form.is_valid()
@@ -73,8 +74,8 @@ def class_search_api(request):
 		q           = form.cleaned_data['q']
 		page_size   = form.cleaned_data['page_size']
 		page_num    = form.cleaned_data['page_num']
-		api_url     = get_courses_url(api_url, term_code, subject, course_num, q, page_size, page_num)
-		response    = requests.get(api_url, headers=headers)
+		request_url     = get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num)
+		response    = requests.get(request_url, headers=headers)
 		data, links = get_courses_details(response)
 	else:
 		if DEBUG:
@@ -84,8 +85,16 @@ def class_search_api(request):
 
 
 def course_subjects_api(request):
+	global config_file, api_url, access_token, headers
+
+	endpoint    = '/subjects'
+	request_url = api_url + endpoint
+	response    = requests.get(request_url, headers=headers)
+	data, links = get_courses_details(response)
 	return render_to_response('catalog_api_demo/course_subjects_api_index.html', locals(), RequestContext(request))
 
 
 def terms_api(request):
+	global config_file, api_url, access_token, headers
+
 	return render_to_response('catalog_api_demo/terms_api_index.html', locals(), RequestContext(request))

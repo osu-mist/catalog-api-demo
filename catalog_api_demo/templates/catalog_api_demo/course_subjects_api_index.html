@@ -3,82 +3,20 @@
 <head>
 	{% load static %}
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="{% static 'catalog_api_demo/class_search_api_style.css' %}"/>
-	<title>Catalog API Demo</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'catalog_api_demo/course_subjects_api_style.css' %}"/>
+	<title>Course Subjects API Demo</title>
 </head>
 <body>
-	<h1>Class Search API Demo</h1>
+	<h1>Course Subjects API Demo</h1>
 	Request Endpoint: {{ request_url }}<br>
-
-	<form action="" method="POST">{% csrf_token %}
-		<table>
-			<tr>
-				<th><label for="year">Year</label></th>
-				<th><input type="text" name="year" value="2016" required></th> 
-			</tr>
-			<tr>
-				<th><label for="term">Term</label></th>
-				<th><input class="term-list" type="radio" name="term" value="fall" checked>Fall<input class="term-list" type="radio" name="term" value="winter">Winter<input class="term-list" type="radio" name="term" value="spring">Spring<input class="term-list" type="radio" name="term" value="summer">Summer</th>
-			</tr>
-			<tr>
-				<th><label for="subject">Subject</label></th>
-				<th><input type="text" name="subject" value="CS"></th> 
-			</tr>
-			<tr>
-				<th><label for="course_num">Course Number</label></th>
-				<th><input type="text" name="course_num" value="101"></th> 
-			</tr>
-			<tr>
-				<th><label for="q">Query</label></th>
-				<th><input type="text" name="q"></th> 
-			</tr>
-			<tr>
-				<th><label for="page_size">Page Size</label></th>
-				<th><input type="text" name="page_size" value="10"></th> 
-			</tr>
-			<tr>
-				<th><label for="page_num">Page Number</label></th>
-				<th><input type="text" name="page_num"></th> 
-			</tr>
-		</table>
-	<input type="submit" value="Submit">
-	</form>
 
 		<hr>
 			{% if data %}
 			<h3>Total {{ data | length }} Result(s)</h3>
-			{% for course in data %}
-				<h4>Course ID (CRN): {{ course.id }}</h4>
-				<h4>Course Details:</h4>
-					Title: {{ course.attributes.courseTitle }}<br>
-					Subject: {{ course.attributes.subjectDescription }}<br>
-					Course Number: {{ course.attributes.subject }} {{ course.attributes.courseNumber }}<br>
-					Section: {{ course.attributes.section }}<br>
-					Credit Hours: {{ course.attributes.creditHours }}<br>
-					Campus: {{ course.attributes.campusDescription }}<br>
-					Term: {{ course.attributes.termDescription }}<br>
-					Duration: {{ course.attributes.termStartDate }} to {{ course.attributes.termEndDate }} ({{ course.attributes.termWeeks }} weeks)<br>
-					{% for faculty in course.attributes.faculty %}
-						Instructor: {{ faculty.displayName }}<br>
-					{% endfor %}
-					{% for meeting in course.attributes.meetingTimes %}
-						Location: {{ meeting.buildingName }} ({{ meeting.building }})<br>
-						Room: {{ meeting.room }}<br>
-						Time: {% if meeting.monday %}M{% endif %}{% if meeting.tuesday %}T{% endif %}{% if meeting.wednesday %}W{% endif %}{% if meeting.thursday %}R{% endif %}{% if meeting.friday %}F{% endif %}
-						{{ meeting.startTime }} to {{ meeting.endTime }}<br>	
-					{% endfor %}
-					Scheduled Type: {{ course.attributes.scheduleTypeDescription }}<br>
-					Maximum Enrollment: {{ course.attributes.maximumEnrollment }}<br>
-					Current Enrollment: {{ course.attributes.enrollment }}<br>
-					Status: {{ course.attributes.status }}<br>
-						{% if course.attributes.status == "Waitlisted" %}
-						Wait Capacity: {{ course.attributes.waitCapacity }}<br>
-						Wait Count: {{ course.attributes.waitCount }}<br>
-						{% endif %}
-				{% if course.links %}
-					<h4>Course Links:</h4>
-					{{ course.links }}<br>
-				{% endif %}
+			{% for subject in data %}
+				<h4>Subject Details:</h4>
+					Title: {{ subject.attributes.title }}<br>
+					Abbreviation: {{ subject.attributes.abbreviation }}<br>
 				<hr>
 			{% endfor %}
 			{% else %}
