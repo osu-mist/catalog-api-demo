@@ -81,3 +81,11 @@ def class_search_api(request):
 			print "Form is not valid."
 
 	return render_to_response('catalog_api_demo/class_search_api_index.html', locals(), RequestContext(request))
+
+
+def course_subjects_api(request):
+	return render_to_response('catalog_api_demo/course_subjects_api_index.html', locals(), RequestContext(request))
+
+
+def terms_api(request):
+	return render_to_response('catalog_api_demo/terms_api_index.html', locals(), RequestContext(request))
