@@ -48,8 +48,12 @@ def get_courses_url(request_url, term_code, subject, course_num, q, page_size, p
 
 
 def get_courses_details(response):
-	response_data  = response.json()['data']
-	response_links = response.json()['links']
+	if response.status_code == 200:
+		response_data  = response.json()['data']
+		response_links = response.json()['links']
+	else:
+		response_data  = []
+		response_links = []
 	pprint(json.loads(response.text))
 	return response_data, response_links
 

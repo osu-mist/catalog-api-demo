@@ -7,7 +7,7 @@
 	<title>Catalog API Demo</title>
 </head>
 <body>
-	<h1>Class Search API</h1>
+	<h1>Catalog API Demo</h1>
 	Request Endpoint: {{ request_url }}<br>
 
 	<form action="" method="POST">{% csrf_token %}
@@ -45,7 +45,7 @@
 	</form>
 
 		<hr>
-		{% if form_is_valid %}
+			{% if data %}
 			<h3>Total {{ data | length }} Result(s)</h3>
 			{% for course in data %}
 				<h4>Course ID (CRN): {{ course.id }}</h4>
@@ -81,7 +81,9 @@
 				{% endif %}
 				<hr>
 			{% endfor %}
-		{% endif %}
+			{% else %}
+				<h3>Result Not Found</h3>
+			{% endif %}
 
 </body>
 </html>
