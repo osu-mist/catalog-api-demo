@@ -7,6 +7,9 @@ import requests
 from pprint import pprint
 
 
+DEBUG = False
+
+
 def get_access_token(token_url, client_id, client_secret):
 	token_resp = requests.post(token_url, data={
 		'client_id': client_id,
@@ -48,13 +51,15 @@ def get_courses_url(request_url, term_code, subject, course_num, q, page_size, p
 
 
 def get_courses_details(response):
+	global DEBUG
 	if response.status_code == 200:
 		response_data  = response.json()['data']
 		response_links = response.json()['links']
 	else:
 		response_data  = []
 		response_links = []
-	pprint(json.loads(response.text))
+	if DEBUG:
+		pprint(json.loads(response.text))
 	return response_data, response_links
 
 
@@ -84,6 +89,7 @@ def catalog_api_demo(request):
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_courses_details(response)
 	else:
-		print "Form is not valid."
+		if DEBUG:
+			print "Form is not valid."
 
 	return render_to_response('catalog_api_demo/index.html', locals(), RequestContext(request))
