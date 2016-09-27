@@ -6,8 +6,7 @@ import json
 import requests
 from pprint import pprint
 
-
-DEBUG = False
+DEBUG = True
 
 
 def get_access_token(token_url, client_id, client_secret):
@@ -63,7 +62,7 @@ def get_courses_details(response):
 	return response_data, response_links
 
 
-def catalog_api_demo(request):
+def class_search_api(request):
 	config_file   = open('../configuration.json')
 	config_data   = json.load(config_file)
 	base_url      = config_data['hostname'] + config_data['version'] + config_data['api']
@@ -92,4 +91,4 @@ def catalog_api_demo(request):
 		if DEBUG:
 			print "Form is not valid."
 
-	return render_to_response('catalog_api_demo/index.html', locals(), RequestContext(request))
+	return render_to_response('catalog_api_demo/class_search_api_index.html', locals(), RequestContext(request))
