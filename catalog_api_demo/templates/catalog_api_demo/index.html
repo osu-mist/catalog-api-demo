@@ -57,7 +57,7 @@
 					Credit Hours: {{ course.attributes.creditHours }}<br>
 					Campus: {{ course.attributes.campusDescription }}<br>
 					Term: {{ course.attributes.termDescription }}<br>
-					Duration: {{ course.attributes.termStartDate }} - {{ course.attributes.termEndDate }} ({{ course.attributes.termWeeks }} weeks)<br>
+					Duration: {{ course.attributes.termStartDate }} to {{ course.attributes.termEndDate }} ({{ course.attributes.termWeeks }} weeks)<br>
 					{% for faculty in course.attributes.faculty %}
 						Instructor: {{ faculty.displayName }}<br>
 					{% endfor %}
@@ -65,7 +65,7 @@
 						Location: {{ meeting.buildingName }} ({{ meeting.building }})<br>
 						Room: {{ meeting.room }}<br>
 						Time: {% if meeting.monday %}M{% endif %}{% if meeting.tuesday %}T{% endif %}{% if meeting.wednesday %}W{% endif %}{% if meeting.thursday %}R{% endif %}{% if meeting.friday %}F{% endif %}
-						{{ meeting.startTime }} - {{ meeting.endTime }}<br>	
+						{{ meeting.startTime }} to {{ meeting.endTime }}<br>	
 					{% endfor %}
 					Scheduled Type: {{ course.attributes.scheduleTypeDescription }}<br>
 					Maximum Enrollment: {{ course.attributes.maximumEnrollment }}<br>
