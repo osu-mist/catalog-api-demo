@@ -39,43 +39,19 @@
 		<hr>
 			{% if data %}
 			<h3>Total {{ data | length }} Result(s)</h3>
-			<!-- {% for course in data %}
-				<h4>Course ID (CRN): {{ course.id }}</h4>
+			{% for term in data %}
+				<h4>Term ID: {{ term.id }}</h4>
 				<h4>Course Details:</h4>
-					Title: {{ course.attributes.courseTitle }}<br>
-					Subject: {{ course.attributes.subjectDescription }}<br>
-					Course Number: {{ course.attributes.subject }} {{ course.attributes.courseNumber }}<br>
-					Section: {{ course.attributes.section }}<br>
-					Credit Hours: {{ course.attributes.creditHours }}<br>
-					Campus: {{ course.attributes.campusDescription }}<br>
-					Term: {{ course.attributes.termDescription }}<br>
-					Duration: {{ course.attributes.termStartDate }} to {{ course.attributes.termEndDate }} ({{ course.attributes.termWeeks }} weeks)<br>
-					{% for faculty in course.attributes.faculty %}
-						Instructor: {{ faculty.displayName }}<br>
-					{% endfor %}
-					{% for meeting in course.attributes.meetingTimes %}
-						Location: {{ meeting.buildingName }} ({{ meeting.building }})<br>
-						Room: {{ meeting.room }}<br>
-						Time: {% if meeting.monday %}M{% endif %}{% if meeting.tuesday %}T{% endif %}{% if meeting.wednesday %}W{% endif %}{% if meeting.thursday %}R{% endif %}{% if meeting.friday %}F{% endif %}
-						{{ meeting.startTime }} to {{ meeting.endTime }}<br>	
-					{% endfor %}
-					Scheduled Type: {{ course.attributes.scheduleTypeDescription }}<br>
-					Maximum Enrollment: {{ course.attributes.maximumEnrollment }}<br>
-					Current Enrollment: {{ course.attributes.enrollment }}<br>
-					Status: {{ course.attributes.status }}<br>
-						{% if course.attributes.status == "Waitlisted" %}
-						Wait Capacity: {{ course.attributes.waitCapacity }}<br>
-						Wait Count: {{ course.attributes.waitCount }}<br>
-						{% endif %}
-				{% if course.links %}
-					<h4>Course Links:</h4>
-					{{ course.links }}<br>
-				{% endif %}
+					Description: {{ term.attributes.description }}<br>
+					Financial Aid Year: {{ term.attributes.financialAidYear }}<br>
+					Start Date: {{ term.attributes.startDate }}<br>
+					End Date: {{ term.attributes.endDate }}<br>
+					Housing Start Date: {{ term.attributes.housingStartDate }}<br>
+					Housing End Date: {{ term.attributes.housingEndDate }}<br>
 				<hr>
-			{% endfor %} -->
+			{% endfor %}
 			{% else %}
 				<h3>Result Not Found</h3>
 			{% endif %}
-
 </body>
 </html>
