@@ -10,7 +10,7 @@ import urlparse
 from urllib import urlencode
 from pprint import pprint
 
-DEBUG = True
+DEBUG = False
 
 config_file           = open('../configuration.json')
 api_url, access_token = get_access_token(config_file)
