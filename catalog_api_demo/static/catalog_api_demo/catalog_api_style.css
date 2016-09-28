@@ -1,0 +1,20 @@
+body {
+	color: black;
+	padding: 20px;	
+}
+
+body h1 {
+	margin-bottom: 0.5em;
+}
+
+table {
+	margin: 1em 0px;
+}
+
+table tr th {
+	padding: 0.5em;
+}
+
+table tr th .term-list {
+	margin: 0px 0.3em 0 0.5em;	
+}
