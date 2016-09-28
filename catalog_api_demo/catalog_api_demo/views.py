@@ -1,10 +1,13 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils.encoding import uri_to_iri
 from .forms import CourseForm, TermForm
 from get_access_token import get_access_token
 
 import json
 import requests
+import urlparse
+from urllib import urlencode
 from pprint import pprint
 
 DEBUG = True
@@ -32,20 +35,16 @@ def get_term_code(year, term):
 
 
 def get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num):
-	endpoint    = '/courses'
-	request_url += endpoint + '?term=' + term_code
+	endpoint     = '/courses'
+	request_url  += endpoint
+	params       = {'term': term_code, 'subject': subject, 'courseNumber': course_num, 'q': q, 'page[size]': page_size, 'page[number]': page_num}
+	url_parts    = list(urlparse.urlparse(request_url))
+	query        = dict(urlparse.parse_qsl(url_parts[4]))
+	query.update(params)
+	url_parts[4] = urlencode(query)
+	request_url  = urlparse.urlunparse(url_parts)
 
-	if subject != '':
-		request_url += '&subject=' + subject
-	if course_num != '':
-		request_url += '&courseNumber=' + course_num
-	if q != '':
-		request_url += '&q=' + q
-	if page_size != '':
-		request_url += '&page[size]=' + page_size
-	if page_num != '':
-		request_url += '&page[number]=' + page_num
-	return request_url
+	return uri_to_iri(request_url)
 
 
 def get_details(response):
@@ -99,21 +98,20 @@ def course_subjects_api(request):
 def get_term_url(request_url, term_code, is_open, page_size, page_num):
 	endpoint    = '/terms'
 	request_url += endpoint
+	params      = {'page[size]': page_size, 'page[number]': page_num}
 
-	# Buggy part
-	if page_size != '' or page_num != '':
-		request_url += '?'
-		if page_size != '':
-			request_url += 'page[size]=' + page_size
-		if page_num != '':
-			request_url += '&page[number]=' + page_num
-	# Buggy part
 	if is_open:
 		return request_url + '/open'
-	elif not term_code:
-		return request_url
-	else:
-		return request_url + term_code
+	if term_code:
+		request_url += '/' + term_code
+
+	url_parts    = list(urlparse.urlparse(request_url))
+	query        = dict(urlparse.parse_qsl(url_parts[4]))
+	query.update(params)
+	url_parts[4] = urlencode(query)
+	request_url  = urlparse.urlunparse(url_parts)
+
+	return uri_to_iri(request_url)
 
 
 def terms_api(request):
