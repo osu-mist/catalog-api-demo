@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from .forms import CourseForm
+from .forms import CourseForm, TermForm
 from get_access_token import get_access_token
 
 import json
@@ -15,7 +15,9 @@ headers               = {'Authorization': 'Bearer ' + access_token}
 
 
 def get_term_code(year, term):
-	if term == 'fall':
+	if not year or not term:
+		return None
+	elif term == 'fall':
 		year     = int(year) + 1
 		term_idx = '01'
 	elif term == 'winter':
@@ -46,7 +48,7 @@ def get_courses_url(request_url, term_code, subject, course_num, q, page_size, p
 	return request_url
 
 
-def get_courses_details(response):
+def get_details(response):
 	global DEBUG
 	if response.status_code == 200:
 		response_data  = response.json()['data']
@@ -74,9 +76,9 @@ def class_search_api(request):
 		q           = form.cleaned_data['q']
 		page_size   = form.cleaned_data['page_size']
 		page_num    = form.cleaned_data['page_num']
-		request_url     = get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num)
+		request_url = get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num)
 		response    = requests.get(request_url, headers=headers)
-		data, links = get_courses_details(response)
+		data, links = get_details(response)
 	else:
 		if DEBUG:
 			print "Form is not valid."
@@ -86,15 +88,52 @@ def class_search_api(request):
 
 def course_subjects_api(request):
 	global config_file, api_url, access_token, headers
-
 	endpoint    = '/subjects'
 	request_url = api_url + endpoint
+
 	response    = requests.get(request_url, headers=headers)
-	data, links = get_courses_details(response)
+	data, links = get_details(response)
 	return render_to_response('catalog_api_demo/course_subjects_api_index.html', locals(), RequestContext(request))
+
+
+def get_term_url(request_url, term_code, is_open, page_size, page_num):
+	endpoint    = '/terms'
+	request_url += endpoint
+
+	# Buggy part
+	if page_size != '' or page_num != '':
+		request_url += '?'
+		if page_size != '':
+			request_url += 'page[size]=' + page_size
+		if page_num != '':
+			request_url += '&page[number]=' + page_num
+	# Buggy part
+	if is_open:
+		return request_url + '/open'
+	elif not term_code:
+		return request_url
+	else:
+		return request_url + term_code
 
 
 def terms_api(request):
 	global config_file, api_url, access_token, headers
+	request_url = api_url
+
+	form          = TermForm(request.POST)
+	form_is_valid = form.is_valid()
+	if form_is_valid:
+		year        = form.cleaned_data['year']
+		term        = form.cleaned_data['term']
+		term_code   = get_term_code(year, term)
+		is_open     = form.cleaned_data['is_open']
+		page_size   = form.cleaned_data['page_size']
+		page_num    = form.cleaned_data['page_num']
+		request_url = get_term_url(request_url, term_code, is_open, page_size, page_num)
+		response    = requests.get(request_url, headers=headers)
+		data, links = get_details(response)
+	else:
+		if DEBUG:
+			print "Form is not valid."
 
 	return render_to_response('catalog_api_demo/terms_api_index.html', locals(), RequestContext(request))

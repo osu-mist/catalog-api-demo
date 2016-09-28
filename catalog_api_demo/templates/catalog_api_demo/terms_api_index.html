@@ -14,23 +14,15 @@
 		<table>
 			<tr>
 				<th><label for="year">Year</label></th>
-				<th><input type="text" name="year" value="2016" required></th> 
+				<th><input type="text" name="year"></th> 
 			</tr>
 			<tr>
 				<th><label for="term">Term</label></th>
-				<th><input class="term-list" type="radio" name="term" value="fall" checked>Fall<input class="term-list" type="radio" name="term" value="winter">Winter<input class="term-list" type="radio" name="term" value="spring">Spring<input class="term-list" type="radio" name="term" value="summer">Summer</th>
+				<th><input class="term-list" type="radio" name="term" value="fall">Fall<input class="term-list" type="radio" name="term" value="winter">Winter<input class="term-list" type="radio" name="term" value="spring">Spring<input class="term-list" type="radio" name="term" value="summer">Summer</th>
 			</tr>
 			<tr>
-				<th><label for="subject">Subject</label></th>
-				<th><input type="text" name="subject" value="CS"></th> 
-			</tr>
-			<tr>
-				<th><label for="course_num">Course Number</label></th>
-				<th><input type="text" name="course_num" value="101"></th> 
-			</tr>
-			<tr>
-				<th><label for="q">Query</label></th>
-				<th><input type="text" name="q"></th> 
+				<th><label for="is_open">Open</label></th>
+				<th><input type="checkbox" name="is_open"></th>
 			</tr>
 			<tr>
 				<th><label for="page_size">Page Size</label></th>
@@ -47,7 +39,7 @@
 		<hr>
 			{% if data %}
 			<h3>Total {{ data | length }} Result(s)</h3>
-			{% for course in data %}
+			<!-- {% for course in data %}
 				<h4>Course ID (CRN): {{ course.id }}</h4>
 				<h4>Course Details:</h4>
 					Title: {{ course.attributes.courseTitle }}<br>
@@ -80,7 +72,7 @@
 					{{ course.links }}<br>
 				{% endif %}
 				<hr>
-			{% endfor %}
+			{% endfor %} -->
 			{% else %}
 				<h3>Result Not Found</h3>
 			{% endif %}
