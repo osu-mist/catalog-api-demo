@@ -1,6 +1,7 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 from django.utils.encoding import uri_to_iri
+from django.views.decorators.csrf import csrf_protect
 from .forms import CourseForm, TermForm
 from get_access_token import get_access_token
 
@@ -55,6 +56,7 @@ def get_details(response):
 	return response_data, response_links
 
 
+@csrf_protect
 def class_search_api(request):
 	global config_file, api_url, access_token, headers
 	request_url = api_url
@@ -77,7 +79,7 @@ def class_search_api(request):
 		if DEBUG:
 			print "Form is not valid."
 
-	return render_to_response('catalog_api_demo/class_search_api_index.html', locals(), RequestContext(request))
+	return render(request, 'catalog_api_demo/class_search_api_index.html', locals())
 
 
 def course_subjects_api(request):
@@ -87,7 +89,7 @@ def course_subjects_api(request):
 
 	response    = requests.get(request_url, headers=headers)
 	data, links = get_details(response)
-	return render_to_response('catalog_api_demo/course_subjects_api_index.html', locals(), RequestContext(request))
+	return render(request, 'catalog_api_demo/course_subjects_api_index.html', locals())
 
 
 def get_term_url(request_url, term_code, is_open, page_size, page_num):
@@ -109,6 +111,7 @@ def get_term_url(request_url, term_code, is_open, page_size, page_num):
 	return uri_to_iri(request_url)
 
 
+@csrf_protect
 def terms_api(request):
 	global config_file, api_url, access_token, headers
 	request_url = api_url
@@ -129,8 +132,8 @@ def terms_api(request):
 		if DEBUG:
 			print "Form is not valid."
 
-	return render_to_response('catalog_api_demo/terms_api_index.html', locals(), RequestContext(request))
+	return render(request, 'catalog_api_demo/terms_api_index.html', locals())
 
 
 def catalog_api(request):
-	return render_to_response('catalog_api_demo/catalog_api_index.html', locals(), RequestContext(request))
+	return render(request, 'catalog_api_demo/catalog_api_index.html', locals())
