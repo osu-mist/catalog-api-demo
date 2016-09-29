@@ -30,9 +30,10 @@ Configuration
 Usage
 -----
 
-1. Execute the following command to run the server:
+1. Execute the following commands to run the server:
 
     ```
+    cd catalog_api_demo
     python manage.py runserver
     ```
 
