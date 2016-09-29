@@ -18,6 +18,7 @@ pip install Django==1.10.1
 
 Configuration
 -------------
+
 1. Register your application to use the Class Search API, Course Subjects API, and Terms API at the [OSU Developer Portal](https://developer.oregonstate.edu/).
 2. Put your `configuration.json` file which contains `client_id` and `client_secret` in the root folder of this application.
 
@@ -28,6 +29,7 @@ Configuration
 
 Usage
 -----
+
 1. Execute the following command to run the server:
 
     ```
