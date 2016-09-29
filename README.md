@@ -29,7 +29,9 @@ Configuration
 Usage
 -----
 1. Execute the following command to run the server:
+
     ```
     python manage.py runserver
     ```
+
 2. While the server is running locally, visit `http://127.0.0.1:8000/` with your Web browser.
