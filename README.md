@@ -21,7 +21,15 @@ Configuration
 1. Register your application to use the Class Search API, Course Subjects API, and Terms API at the [OSU Developer Portal](https://developer.oregonstate.edu/).
 2. Put your `configuration.json` file which contains `client_id` and `client_secret` in the root folder of this application.
 
-    ``` json
-        "client_id": "secret",
-        "client_secret": "sauce"
+    ```json
+    "client_id": "secret",
+    "client_secret": "sauce"
     ```
+
+Usage
+-----
+1. Execute the following command to run the server:
+    ```
+    python manage.py runserver
+    ```
+2. While the server is running locally, visit `http://127.0.0.1:8000/` with your Web browser.
