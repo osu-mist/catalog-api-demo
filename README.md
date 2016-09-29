@@ -36,4 +36,4 @@ Usage
     python manage.py runserver
     ```
 
-2. While the server is running locally, visit `http://127.0.0.1:8000/` with your Web browser.
+2. While the server is running locally, visit `http://127.0.0.1:8000/catalog_api_demo/` with your Web browser.
