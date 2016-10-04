@@ -11,8 +11,15 @@ table tr th {
 	padding: 0.5em;
 }
 
-table tr th .term-list {
-	margin: 0px 0.3em 0 0.5em;	
+table tr td ul{
+	margin: 0;
+	padding: 0;
+}
+
+table tr td ul li {
+	margin-right: 0.7em;
+	list-style-type: none;
+	float: left;
 }
 
 button a {

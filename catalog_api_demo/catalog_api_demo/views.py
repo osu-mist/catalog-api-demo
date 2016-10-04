@@ -79,7 +79,7 @@ def class_search_api(request):
 		if DEBUG:
 			print "Form is not valid."
 
-	return render(request, 'catalog_api_demo/class_search_api_index.html', locals())
+	return render(request, 'catalog_api_demo/class_search_api_index.html', locals(), {'form': form})
 
 
 def course_subjects_api(request):
