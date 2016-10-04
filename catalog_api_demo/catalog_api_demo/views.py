@@ -19,11 +19,12 @@ headers               = {'Authorization': 'Bearer ' + access_token}
 
 
 def get_term_code(year, term):
-	if not year or not term:
+	if not year or term == 'none':
 		return None
 
 	term_codes = {'fall': '01', 'winter': '02', 'spring': '03', 'summer': '04'}
 	term_idx   = term_codes[term]
+
 	if term == 'fall':
 		year = int(year) + 1
 	term_code  = str(year) + term_idx
