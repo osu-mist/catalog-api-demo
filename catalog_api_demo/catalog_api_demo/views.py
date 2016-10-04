@@ -68,7 +68,7 @@ def class_search_api(request):
 		year        = form.cleaned_data['year']
 		term        = form.cleaned_data['term']
 		term_code   = get_term_code(year, term)
-		subject     = form.cleaned_data['subject']
+		subject     = form.cleaned_data['subject'].upper()
 		course_num  = form.cleaned_data['course_num']
 		q           = form.cleaned_data['q']
 		page_size   = form.cleaned_data['page_size']
