@@ -132,7 +132,7 @@ def terms_api(request):
 		if DEBUG:
 			print "Form is not valid."
 
-	return render(request, 'catalog_api_demo/terms_api_index.html', locals())
+	return render(request, 'catalog_api_demo/terms_api_index.html', locals(), {'form': form})
 
 
 def catalog_api(request):

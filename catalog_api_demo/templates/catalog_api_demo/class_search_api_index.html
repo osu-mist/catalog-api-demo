@@ -13,7 +13,6 @@
 
 	<form action="" method="POST">{% csrf_token %}
 		<table>
-
 			{% if form.is_valid %}
 				{{ form.as_table }}
 			{% else %}

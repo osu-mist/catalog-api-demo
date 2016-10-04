@@ -1,6 +1,6 @@
 from django import forms
 
-term_choices = (('fall', 'Fall'), ('winter', 'Winter'), ('spring', 'Spring'), ('summer', 'Summer'))
+term_choices    = (('fall', 'Fall'), ('winter', 'Winter'), ('spring', 'Spring'), ('summer', 'Summer'))
 
 
 class CourseForm(forms.Form):
@@ -14,8 +14,8 @@ class CourseForm(forms.Form):
 
 
 class TermForm(forms.Form):
-	year      = forms.CharField(label='year', required=False)
-	term      = forms.CharField(label='term', required=False)
-	is_open   = forms.CharField(label='is_open', required=False)
-	page_size = forms.CharField(label='page_size', required=False)
-	page_num  = forms.CharField(label='page_num', required=False)
+	year      = forms.CharField(label='Year', required=False)
+	term      = forms.ChoiceField(label='Term', widget=forms.RadioSelect, choices=term_choices, required=False)
+	is_open   = forms.BooleanField(label='Open', required=False)
+	page_size = forms.CharField(label='Page Size', required=False)
+	page_num  = forms.CharField(label='Page Number', required=False)
