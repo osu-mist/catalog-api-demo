@@ -14,35 +14,25 @@
 	<form action="" method="POST">{% csrf_token %}
 		<table>
 			{% if form.is_valid %}
-				{{ form.as_table }}
-			{% else %}
+			<tr>
+				<th><label for="is_open">Open:</label></th>
+				<th>{{ form.is_open }}</th>
+			</tr>
 			<tr>
 				<th><label for="year">Year:</label></th>
-				<th><input type="text" name="year"></th>
+				<th>{{ form.year }}</th>
 			</tr>
 			<tr>
 				<th><label for="term">Term:</label></th>
-				<td>
-					<ul>
-						<li><label><input class="term-list" type="radio" name="term" value="fall"> Fall</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="winter"> Winter</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="spring"> Spring</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="summer"> Summer</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="none"> None</label></li>
-					</ul>
-				</td>
-			</tr>
-			<tr>
-				<th><label for="is_open">Open:</label></th>
-				<th><input type="checkbox" name="is_open"></th>
+				<td>{{ form.term }}</td>
 			</tr>
 			<tr>
 				<th><label for="page_size">Page Size:</label></th>
-				<th><input type="text" name="page_size"></th> 
+				<th>{{ form.page_size }}</th> 
 			</tr>
 			<tr>
 				<th><label for="page_num">Page Number:</label></th>
-				<th><input type="text" name="page_num"></th> 
+				<th>{{ form.page_num }}</th> 
 			</tr>
 			{% endif %}
 		</table>
