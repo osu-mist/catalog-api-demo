@@ -30,3 +30,7 @@ button a:hover {
 	color: black;
 	text-decoration: none;
 }
+
+::-webkit-input-placeholder {
+	font-weight: 500;
+}
