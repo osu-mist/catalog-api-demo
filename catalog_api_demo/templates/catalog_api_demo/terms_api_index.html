@@ -16,11 +16,11 @@
 			{% if form.is_valid %}
 			<tr>
 				<th><label for="is_open">Open:</label></th>
-				<th>{{ form.is_open }}</th>
+				<td>{{ form.is_open }}</td>
 			</tr>
 			<tr>
 				<th><label for="year">Year:</label></th>
-				<th>{{ form.year }}</th>
+				<td>{{ form.year }}</td>
 			</tr>
 			<tr>
 				<th><label for="term">Term:</label></th>
@@ -28,11 +28,11 @@
 			</tr>
 			<tr>
 				<th><label for="page_size">Page Size:</label></th>
-				<th>{{ form.page_size }}</th> 
+				<td>{{ form.page_size }}</td> 
 			</tr>
 			<tr>
 				<th><label for="page_num">Page Number:</label></th>
-				<th>{{ form.page_num }}</th> 
+				<td>{{ form.page_num }}</td> 
 			</tr>
 			{% endif %}
 		</table>

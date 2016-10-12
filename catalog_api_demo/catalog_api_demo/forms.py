@@ -6,7 +6,7 @@ class CourseForm(forms.Form):
 
 	year       = forms.CharField(label='Year', required=True)
 	term       = forms.ChoiceField(label='Term', widget=forms.RadioSelect, choices=term_choices, required=True)
-	subject    = forms.CharField(label='Subject', required=False)
+	subject    = forms.CharField(label='Subject', required=True)
 	course_num = forms.CharField(label='Course Number', required=False)
 	q          = forms.CharField(label='Query', required=False)
 	page_size  = forms.CharField(label='Page Size', required=False, widget=forms.TextInput(attrs={'placeholder': '10 (Default)'}))

@@ -14,14 +14,41 @@
 	<form action="" method="POST">{% csrf_token %}
 		<table>
 			{% if form.is_valid %}
-				{{ form.as_table }}
+			<tr>
+				<th><label for="year">* Year:</label></th>
+				<td>{{ form.year }}</td>
+			</tr>
+			<tr>
+				<th><label for="term">* Term:</label></th>
+				<td>{{ form.term }}</td>
+			</tr>
+			<tr>
+				<th><label for="subject">* Subject:</label></th>
+				<td>{{ form.subject }}</td>
+			</tr>
+			<tr>
+				<th><label for="course_num">&nbsp;&nbsp;Course Number:</label></th>
+				<td>{{ form.course_num }}</td>
+			</tr>
+			<tr>
+				<th><label for="q">&nbsp;&nbsp;Query:</label></th>
+				<td>{{ form.q }}</td>
+			</tr>
+			<tr>
+				<th><label for="page_size">&nbsp;&nbsp;Page Size:</label></th>
+				<td>{{ form.page_size }}</td> 
+			</tr>
+			<tr>
+				<th><label for="page_num">&nbsp;&nbsp;Page Number:</label></th>
+				<td>{{ form.page_num }}</td> 
+			</tr>
 			{% else %}
 			<tr>
-				<th><label for="year">Year:</label></th>
+				<th><label for="year">* Year:</label></th>
 				<td><input type="text" name="year" value="2016" required></td> 
 			</tr>
 			<tr>
-				<th><label for="term">Term:</label></th>
+				<th><label for="term">* Term:</label></th>
 				<td>
 					<ul>
 						<li><label><input class="term-list" type="radio" name="term" value="fall" checked> Fall</label></li>
@@ -32,27 +59,28 @@
 				</td>
 			</tr>
 			<tr>
-				<th><label for="subject">Subject:</label></th>
-				<td><input type="text" name="subject"></td> 
+				<th><label for="subject">* Subject:</label></th>
+				<td><input type="text" name="subject" value="CS"></td> 
 			</tr>
 			<tr>
-				<th><label for="course_num">Course Number:</label></th>
+				<th><label for="course_num">&nbsp;&nbsp;Course Number:</label></th>
 				<td><input type="text" name="course_num"></td> 
 			</tr>
 			<tr>
-				<th><label for="q">Query:</label></th>
+				<th><label for="q">&nbsp;&nbsp;Query:</label></th>
 				<td><input type="text" name="q"></td> 
 			</tr>
 			<tr>
-				<th><label for="page_size">Page Size:</label></th>
+				<th><label for="page_size">&nbsp;&nbsp;Page Size:</label></th>
 				<td><input type="text" name="page_size" placeholder="10 (Default)"></td> 
 			</tr>
 			<tr>
-				<th><label for="page_num">Page Number:</label></th>
+				<th><label for="page_num">&nbsp;&nbsp;Page Number:</label></th>
 				<td><input type="text" name="page_num" placeholder="1 (Default)"></td> 
 			</tr>
 			{% endif %}
 		</table>
+		<p>* are required fileds</p>
 	<input type="submit" value="Submit">
 	<button type="button"><a href="/catalog_api_demo/">Back to APIs list</a></button>
 
