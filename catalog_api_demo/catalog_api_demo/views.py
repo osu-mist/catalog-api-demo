@@ -55,6 +55,8 @@ def get_details(response):
 		response_links = []
 	if DEBUG:
 		pprint(json.loads(response.text))
+	if type(response_data) is dict:
+		response_data = [response_data]
 	return response_data, response_links
 
 
