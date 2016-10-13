@@ -85,8 +85,29 @@
 	<button type="button"><a href="/catalog_api_demo/">Back to APIs list</a></button>
 
 	</form>
-
 		<hr>
+			{% if links %}
+				<div id="page_info">Pages: {{ current_page }} / {{ total_page }}</div>
+				{% if links.prev %}
+					<form action="" method="GET" class="page_form">{% csrf_token %}
+						<input type="hidden" name="page_link" value="{{ links.prev }}">
+						<input type="submit" value="&larr;">
+					</form>
+				{% endif %}
+				{% if links.next %}
+					<form action="" method="GET" class="page_form">{% csrf_token %}
+						<input type="hidden" name="page_link" value="{{ links.next }}">
+						<input type="submit" value="&rarr;">
+					</form>
+				{% endif %}
+				{% if links.last %}	
+					<form action="" method="GET" class="page_form">{% csrf_token %}
+						<input type="hidden" name="page_link" value="{{ links.last }}">
+						<input type="submit" value="To Last Page">
+					</form>
+				{% endif %}
+				<div class="clearfix"></div>
+			{% endif %}
 			{% if data %}
 			<h3>Total {{ data | length }} Result(s)</h3>
 			{% for course in data %}

@@ -12,7 +12,7 @@ import urlparse
 from urllib import urlencode
 from pprint import pprint
 
-DEBUG = True
+DEBUG = False
 
 config_file           = open('../configuration.json')
 api_url, access_token = get_access_token(config_file)
@@ -62,6 +62,7 @@ def get_details(response):
 def class_search_api(request):
 	global config_file, api_url, access_token, headers
 	request_url = api_url
+	data, links = None, None
 
 	form          = CourseForm(request.GET)
 	form_is_valid = form.is_valid()
@@ -80,6 +81,17 @@ def class_search_api(request):
 	else:
 		if DEBUG:
 			print "Form is not valid."
+
+	page_form = PageForm(request.GET)
+	if page_form.is_valid():
+		page_link   = uri_to_iri(page_form.cleaned_data['page_link'])
+		request_url = 'https://oregonstateuniversity-dev.apigee.net/' + re.findall(r'^https://api.oregonstate.edu/(.*)', page_link)[0]  # should be fixed in backend API
+		response    = requests.get(request_url, headers=headers)
+		data, links = get_details(response)
+
+	if links:
+		total_page   = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['last']))[0]
+		current_page = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['self']))[0]
 
 	return render(request, 'catalog_api_demo/class_search_api_index.html', locals(), {'form': form})
 
@@ -117,6 +129,7 @@ def get_term_url(request_url, term_code, is_open, page_size, page_num):
 def terms_api(request):
 	global config_file, api_url, access_token, headers
 	request_url = api_url
+	data, links = None, None
 
 	form          = TermForm(request.GET)
 	form_is_valid = form.is_valid()
