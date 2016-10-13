@@ -134,16 +134,16 @@ def terms_api(request):
 		if DEBUG:
 			print "Form is not valid."
 
-	if links:
-		total_page   = re.findall(r'\d+', re.findall(r'page\[number\]=\d+', uri_to_iri(links['last']))[0])[0]
-		current_page = re.findall(r'\d+', re.findall(r'page\[number\]=\d+', uri_to_iri(links['self']))[0])[0]
-
 	page_form = PageForm(request.GET)
 	if page_form.is_valid():
 		page_link   = uri_to_iri(page_form.cleaned_data['page_link'])
-		print page_link
-		response    = requests.get(page_link, headers=headers)
+		request_url = 'https://oregonstateuniversity-dev.apigee.net/' + re.findall(r'^https://api.oregonstate.edu/(.*)', page_link)[0]  # should be fixed in backend API
+		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
+
+	if links:
+		total_page   = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['last']))[0]
+		current_page = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['self']))[0]
 
 	return render(request, 'catalog_api_demo/terms_api_index.html', locals(), {'form': form})
 
