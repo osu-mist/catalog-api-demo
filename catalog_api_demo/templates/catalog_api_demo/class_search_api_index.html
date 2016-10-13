@@ -11,7 +11,7 @@
 	<h1>Class Search API Demo</h1>
 	<p>Request Endpoint: {{ request_url }}</p>
 
-	<form action="" method="POST">{% csrf_token %}
+	<form action="" method="GET">{% csrf_token %}
 		<table>
 			{% if form.is_valid %}
 			<tr>

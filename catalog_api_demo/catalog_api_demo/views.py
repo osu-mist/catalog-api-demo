@@ -6,12 +6,13 @@ from .forms import CourseForm, TermForm
 from get_access_token import get_access_token
 
 import json
+import re
 import requests
 import urlparse
 from urllib import urlencode
 from pprint import pprint
 
-DEBUG = False
+DEBUG = True
 
 config_file           = open('../configuration.json')
 api_url, access_token = get_access_token(config_file)
@@ -62,7 +63,7 @@ def class_search_api(request):
 	global config_file, api_url, access_token, headers
 	request_url = api_url
 
-	form          = CourseForm(request.POST)
+	form          = CourseForm(request.GET)
 	form_is_valid = form.is_valid()
 	if form_is_valid:
 		year        = form.cleaned_data['year']
@@ -117,7 +118,7 @@ def terms_api(request):
 	global config_file, api_url, access_token, headers
 	request_url = api_url
 
-	form          = TermForm(request.POST)
+	form          = TermForm(request.GET)
 	form_is_valid = form.is_valid()
 	if form_is_valid:
 		year        = form.cleaned_data['year']
@@ -132,6 +133,12 @@ def terms_api(request):
 	else:
 		if DEBUG:
 			print "Form is not valid."
+
+	if links:
+		total_page   = re.findall(r'\d+', re.findall(r'page\[number\]=\d+', uri_to_iri(links['last']))[0])[0]
+		current_page = re.findall(r'\d+', re.findall(r'page\[number\]=\d+', uri_to_iri(links['self']))[0])[0]
+	else:
+		print "no links"
 
 	return render(request, 'catalog_api_demo/terms_api_index.html', locals(), {'form': form})
 

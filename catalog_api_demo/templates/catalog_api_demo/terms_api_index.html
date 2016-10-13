@@ -11,7 +11,7 @@
 	<h1>Terms API Demo</h1>
 	<p>Request Endpoint: {{ request_url }}</p>
 
-	<form action="" method="POST">{% csrf_token %}
+	<form action="" method="GET">{% csrf_token %}
 		<table>
 			{% if form.is_valid %}
 			<tr>
@@ -41,6 +41,10 @@
 	</form>
 
 		<hr>
+			{% if links %}
+				<h3>Pages: {{ current_page }} / {{ total_page }}</h3>
+				
+			{% endif %}
 			{% if data %}
 			<h3>Total {{ data | length }} Result(s)</h3>
 			{% for term in data %}
