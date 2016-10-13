@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	// hide unnecessary parameters
 	if ($("#id_is_open").is(":checked")) {
 		$("#id_year").parent().parent().hide();
 		$("#id_term").parent().parent().hide();
@@ -26,5 +27,13 @@ $(document).ready(function(){
 		} else {
 			$("#id_year").parent().parent().show();
 		}
+	});
+
+	// result filter
+	$("#filter_box").keyup(function(){
+		var value = $(this).val().toLowerCase();
+		$("#results").each(function(){
+
+		});
 	});
 });

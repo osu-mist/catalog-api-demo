@@ -109,44 +109,115 @@
 				<div class="clearfix"></div>
 			{% endif %}
 			{% if data %}
-			<h3>Total {{ data | length }} Result(s)</h3>
-			{% for course in data %}
-				<h4>Course ID (CRN): {{ course.id }}</h4>
-				<h4>Course Details:</h4>
-					Title: {{ course.attributes.courseTitle }}<br>
-					Subject: {{ course.attributes.subjectDescription }}<br>
-					Course Number: {{ course.attributes.subject }} {{ course.attributes.courseNumber }}<br>
-					Section: {{ course.attributes.section }}<br>
-					Credit Hours: {{ course.attributes.creditHours }}<br>
-					Campus: {{ course.attributes.campusDescription }}<br>
-					Term: {{ course.attributes.termDescription }}<br>
-					Duration: {{ course.attributes.termStartDate }} to {{ course.attributes.termEndDate }} ({{ course.attributes.termWeeks }} weeks)<br>
-					{% for faculty in course.attributes.faculty %}
-						Instructor: {{ faculty.displayName }}<br>
-					{% endfor %}
-					{% for meeting in course.attributes.meetingTimes %}
-						Location: {{ meeting.buildingName }} ({{ meeting.building }})<br>
-						Room: {{ meeting.room }}<br>
-						Time: {% if meeting.monday %}M{% endif %}{% if meeting.tuesday %}T{% endif %}{% if meeting.wednesday %}W{% endif %}{% if meeting.thursday %}R{% endif %}{% if meeting.friday %}F{% endif %}
-						{{ meeting.startTime }} to {{ meeting.endTime }}<br>	
-					{% endfor %}
-					Scheduled Type: {{ course.attributes.scheduleTypeDescription }}<br>
-					Maximum Enrollment: {{ course.attributes.maximumEnrollment }}<br>
-					Current Enrollment: {{ course.attributes.enrollment }}<br>
-					Status: {{ course.attributes.status }}<br>
-						{% if course.attributes.status == "Waitlisted" %}
-						Wait Capacity: {{ course.attributes.waitCapacity }}<br>
-						Wait Count: {{ course.attributes.waitCount }}<br>
-						{% endif %}
-				{% if course.links %}
-					<h4>Course Links:</h4>
-					{{ course.links }}<br>
-				{% endif %}
-				<hr>
-			{% endfor %}
-			{% else %}
-				<h3>Result Not Found</h3>
-			{% endif %}
+			<div id="filter_wrapper" style="">
+				Filter: <input id="filter_box" name="building" value="" type="text">
+			</div>
+			
+			<div id="results">
+				<h3>Total {{ data | length }} Result(s)</h3>
+				{% for course in data %}
 
+					<table>
+						<tr>
+							<th>Course ID (CRN):</th>
+							<td>{{ course.id }}</td>
+						</tr>
+						<tr>
+							<th>Title:</th>
+							<td>{{ course.attributes.courseTitle }}</td>
+						</tr>
+						<tr>
+							<th>Subject:</th>
+							<td>{{ course.attributes.subjectDescription }}</td>
+						</tr>
+						<tr>
+							<th>Course Number:</th>
+							<td>{{ course.attributes.subject }} {{ course.attributes.courseNumber }}</td>
+						</tr>
+						<tr>
+							<th>Section:</th>
+							<td>{{ course.attributes.section }}</td>
+						</tr>
+						<tr>
+							<th>Credit Hours:</th>
+							<td>{{ course.attributes.creditHours }}</td>
+						</tr>
+						<tr>
+							<th>Campus:</th>
+							<td>{{ course.attributes.campusDescription }}</td>
+						</tr>
+						<tr>
+							<th>Term:</th>
+							<td>{{ course.attributes.termDescription }}</td>
+						</tr>
+						<tr>
+							<th>Duration:</th>
+							<td>{{ course.attributes.termStartDate }} to {{ course.attributes.termEndDate }} ({{ course.attributes.termWeeks }} weeks)</td>
+						</tr>
+						{% for faculty in course.attributes.faculty %}
+							<tr>
+								<th>Instructor:</th>
+								<td>{{ faculty.displayName }}</td>
+							</tr>
+						{% endfor %}
+						{% for meeting in course.attributes.meetingTimes %}
+							<tr>
+								<th>Location:</th>
+								<td>{{ meeting.buildingName }} ({{ meeting.building }})</td>
+							</tr>
+							<tr>
+								<th>Room:</th>
+								<td>{{ meeting.room }}</td>
+							</tr>
+							<tr>
+								<th>Time:</th>
+								<td>{% if meeting.monday %}M{% endif %}{% if meeting.tuesday %}T{% endif %}{% if meeting.wednesday %}W{% endif %}{% if meeting.thursday %}R{% endif %}{% if meeting.friday %}F{% endif %}
+							{{ meeting.startTime }} to {{ meeting.endTime }}</td>
+							</tr>
+						{% endfor %}
+						<tr>
+							<th>Scheduled Type:</th>
+							<td>{{ course.attributes.scheduleTypeDescription }}</td>
+						</tr>
+						<tr>
+							<th>Maximum Enrollment:</th>
+							<td>{{ course.attributes.maximumEnrollment }}</td>
+						</tr>
+						<tr>
+							<th>Current Enrollment:</th>
+							<td>{{ course.attributes.enrollment }}</td>
+						</tr>
+						<tr>
+							<th>Status:</th>
+							<td>{{ course.attributes.status }}</td>
+						</tr>
+						{% if course.attributes.status == "Waitlisted" %}
+							<tr>
+								<th>Wait Capacity:</th>
+								<td>{{ course.attributes.waitCapacity }}</td>
+							</tr>
+							<tr>
+								<th>Wait Count:</th>
+								<td>{{ course.attributes.waitCount }}</td>
+							</tr>
+						{% endif %}
+						{% if course.links %}
+							<tr>
+								<th>Course Links:</th>
+								<td>{{ course.links }}</td>
+							</tr>
+						<br>
+					{% endif %}
+					</table>
+					<hr>
+				{% endfor %}
+				{% else %}
+					<h3>Result Not Found</h3>
+				{% endif %}
+			</div>
+
+	<!-- Scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'catalog_api_demo/js/main.js' %}"></script>
 </body>
 </html>
