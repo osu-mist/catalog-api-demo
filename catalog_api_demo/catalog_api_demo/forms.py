@@ -14,7 +14,7 @@ class CourseForm(forms.Form):
 
 
 class TermForm(forms.Form):
-	term_choices = (('fall', 'Fall'), ('winter', 'Winter'), ('spring', 'Spring'), ('summer', 'Summer'), ('none', 'None'))
+	term_choices = (('fall', 'Fall'), ('winter', 'Winter'), ('spring', 'Spring'), ('summer', 'Summer'), ('all', 'All'))
 
 	is_open   = forms.BooleanField(label='Open', required=False)
 	year      = forms.CharField(label='Year', required=False)

@@ -20,7 +20,7 @@ headers               = {'Authorization': 'Bearer ' + access_token}
 
 
 def get_term_code(year, term):
-	if not year or term == 'none':
+	if not year or term == 'all':
 		return None
 
 	term_codes = {'fall': '01', 'winter': '02', 'spring': '03', 'summer': '04'}
