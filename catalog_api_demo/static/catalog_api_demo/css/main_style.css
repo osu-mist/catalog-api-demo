@@ -34,3 +34,18 @@ button a:hover {
 ::-webkit-input-placeholder {
 	font-weight: 500;
 }
+
+#page_info {
+	float: left;
+	font-size: 1.2em;
+	margin-right: 1em;
+}
+
+.page_form {
+	float: left;
+	margin-right: 0.5em;
+}
+
+.clearfix {
+	clear: both;
+}
