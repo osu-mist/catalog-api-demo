@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template import RequestContext
 from django.utils.encoding import uri_to_iri
 from django.views.decorators.csrf import csrf_protect
-from .forms import CourseForm, TermForm
+from .forms import *
 from get_access_token import get_access_token
 
 import json
@@ -137,8 +137,13 @@ def terms_api(request):
 	if links:
 		total_page   = re.findall(r'\d+', re.findall(r'page\[number\]=\d+', uri_to_iri(links['last']))[0])[0]
 		current_page = re.findall(r'\d+', re.findall(r'page\[number\]=\d+', uri_to_iri(links['self']))[0])[0]
-	else:
-		print "no links"
+
+	page_form = PageForm(request.GET)
+	if page_form.is_valid():
+		page_link   = uri_to_iri(page_form.cleaned_data['page_link'])
+		print page_link
+		response    = requests.get(page_link, headers=headers)
+		data, links = get_details(response)
 
 	return render(request, 'catalog_api_demo/terms_api_index.html', locals(), {'form': form})
 

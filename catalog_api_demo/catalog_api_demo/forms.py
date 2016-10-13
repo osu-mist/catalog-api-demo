@@ -21,3 +21,7 @@ class TermForm(forms.Form):
 	term      = forms.ChoiceField(label='Term', widget=forms.RadioSelect, choices=term_choices, required=False)
 	page_size = forms.CharField(label='Page Size', required=False, widget=forms.TextInput(attrs={'placeholder': '10 (Default)'}))
 	page_num  = forms.CharField(label='Page Number', required=False, widget=forms.TextInput(attrs={'placeholder': '1 (Default)'}))
+
+
+class PageForm(forms.Form):
+	page_link = forms.CharField(label='Page Link', required=True)

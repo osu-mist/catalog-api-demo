@@ -43,7 +43,10 @@
 		<hr>
 			{% if links %}
 				<h3>Pages: {{ current_page }} / {{ total_page }}</h3>
-				
+				<form action="" method="GET">{% csrf_token %}
+					<input type="text" name="page_link" value="{{ links.prev }}">
+					<input type="submit" value="Previous Page">
+				</form>
 			{% endif %}
 			{% if data %}
 			<h3>Total {{ data | length }} Result(s)</h3>
