@@ -32,8 +32,15 @@ $(document).ready(function(){
 	// result filter
 	$("#filter_box").keyup(function(){
 		var value = $(this).val().toLowerCase();
-		$("#results").each(function(){
-
+		$("#results table").each(function(index, element){
+			$(element).children("tbody").children("tr").children("td").each(function(idx, ele){
+				if ($(ele).text().toLowerCase().indexOf(value) == -1){
+					$(ele).closest("table").hide();
+				} else {
+					$(ele).closest("table").show();
+					return false;
+				}
+			});
 		});
 	});
 });
