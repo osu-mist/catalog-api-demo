@@ -38,10 +38,14 @@
 		</table>
 	<input type="submit" value="Submit">
 	<button type="button"><a href="/catalog_api_demo/">Back to APIs list</a></button>
+	<hr>
+	<div id="filter_wrapper">
+		<label for="filter">&nbsp;&nbsp;Filter:</label>
+		<input id="filter_box" name="building" value="" type="text">
+	</div>
 	</form>
-		<hr>
 			{% if links %}
-				<div id="page_info">Pages: {{ current_page }} / {{ total_page }}</div>
+				<label id="page_info" for="page_info">&nbsp;&nbsp;Pages: {{ current_page }} / {{ total_page }}</label>
 				{% if links.prev %}
 					<form action="" method="GET" class="page_form">{% csrf_token %}
 						<input type="hidden" name="page_link" value="{{ links.prev }}">
@@ -62,19 +66,45 @@
 				{% endif %}
 				<div class="clearfix"></div>
 			{% endif %}
+
 			{% if data %}
-			<h3>Total {{ data | length }} Result(s)</h3>
-			{% for term in data %}
-				<h4>Term ID: {{ term.id }}</h4>
-				<h4>Course Details:</h4>
-					Description: {{ term.attributes.description }}<br>
-					Financial Aid Year: {{ term.attributes.financialAidYear }}<br>
-					Start Date: {{ term.attributes.startDate }}<br>
-					End Date: {{ term.attributes.endDate }}<br>
-					Housing Start Date: {{ term.attributes.housingStartDate }}<br>
-					Housing End Date: {{ term.attributes.housingEndDate }}<br>
-				<hr>
-			{% endfor %}
+			<div id="results">
+				<h3>Total <span id="totle_count"></span> Result(s)</h3>
+				{% for term in data %}
+					<table class="result">
+						<tbody>
+							<tr>
+								<th>Term ID:</th>
+								<td class="description">{{ term.id }}</td>
+							</tr>
+							<tr>
+								<th>Description:</th>
+								<td class="description">{{ term.attributes.description }}</td>
+							</tr>
+							<tr>
+								<th>Financial Aid Year:</th>
+								<td class="description">{{ term.attributes.financialAidYear }}</td>
+							</tr>
+							<tr>
+								<th>Start Date:</th>
+								<td class="description">{{ term.attributes.startDate }}</td>
+							</tr>
+							<tr>
+								<th>End Date:</th>
+								<td class="description">{{ term.attributes.endDate }}</td>
+							</tr>
+							<tr>
+								<th>Housing Start Date:</th>
+								<td class="description">{{ term.attributes.housingStartDate }}</td>
+							</tr>
+							<tr>
+								<th>Housing End Date:</th>
+								<td class="description">{{ term.attributes.housingEndDate }}</td>
+							</tr>
+						</tbody>
+					</table>
+				{% endfor %}
+			</div>
 			{% else %}
 				<h3>Result Not Found</h3>
 			{% endif %}
