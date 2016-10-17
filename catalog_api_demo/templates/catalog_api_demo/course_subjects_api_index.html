@@ -13,17 +13,35 @@
 
 		<button type="button"><a href="/catalog_api_demo/">Back to APIs list</a></button>
 		<hr>
+		<div id="filter_wrapper">
+			<label for="filter">&nbsp;&nbsp;Filter:</label>
+			<input id="filter_box" name="building" value="" type="text">
+		</div>
 			{% if data %}
-			<h3>Total {{ data | length }} Result(s)</h3>
-			{% for subject in data %}
-				<h4>Subject Details:</h4>
-					Title: {{ subject.attributes.title }}<br>
-					Abbreviation: {{ subject.attributes.abbreviation }}<br>
-				<hr>
-			{% endfor %}
+			<div id="results">
+				<h3>Total <span id="totle_count"></span> Result(s)</h3>
+				{% for subject in data %}
+					<table class="result">
+						<tbody>
+							<tr>
+								<th>Title:</th>
+								<td class="description">{{ subject.attributes.title }}</td>
+							</tr>
+							<tr>
+								<th>Abbreviation:</th>
+								<td class="description">{{ subject.attributes.abbreviation }}</td>
+							</tr>
+						</tbody>
+					</table>
+				{% endfor %}
+			</div>
 			{% else %}
 				<h3>Result Not Found</h3>
 			{% endif %}
+
+	<!-- Scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript" src="{% static 'catalog_api_demo/js/main.js' %}"></script>
 
 </body>
 </html>
