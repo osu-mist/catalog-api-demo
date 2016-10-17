@@ -1,4 +1,7 @@
 $(document).ready(function(){
+	var totle_count = $(".result:visible").length;
+	$("#totle_count").text(totle_count);
+
 	// hide unnecessary parameters
 	if ($("#id_is_open").is(":checked")) {
 		$("#id_year").parent().parent().hide();
@@ -29,7 +32,7 @@ $(document).ready(function(){
 		}
 	});
 
-	// result filter
+	// results filter
 	$("#filter_box").keyup(function(){
 		var value = $(this).val().toLowerCase();
 		$("#results table").each(function(index, element){
@@ -42,5 +45,7 @@ $(document).ready(function(){
 				}
 			});
 		});
+		var totle_count = $(".result:visible").length;
+		$("#totle_count").text(totle_count);
 	});
 });

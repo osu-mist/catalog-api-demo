@@ -113,10 +113,9 @@
 			</div>
 			
 			<div id="results">
-				<h3>Total {{ data | length }} Result(s)</h3>
+				<h3>Total <span id="totle_count"></span> Result(s)</h3>
 				{% for course in data %}
 					<table class="result">
-						<hr>
 						<tbody>
 							<tr>
 								<th>Course ID (CRN):</th>
