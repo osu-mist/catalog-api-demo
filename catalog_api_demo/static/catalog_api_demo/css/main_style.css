@@ -37,7 +37,7 @@ button a:hover {
 
 #page_info {
 	float: left;
-	font-size: 1.2em;
+	font-size: 1em;
 	margin-right: 1em;
 }
 
@@ -55,7 +55,7 @@ button a:hover {
 }
 
 #filter_wrapper {
-	margin-bottom: 1em;
+	margin-bottom: 0.5em;
 }
 
 #filter_wrapper #filter_box {

@@ -90,7 +90,7 @@
 	</div>
 	</form>
 			{% if links %}
-				<div id="page_info">Pages: {{ current_page }} / {{ total_page }}</div>
+				<label id="page_info" for="page_info">&nbsp;&nbsp;Pages: {{ current_page }} / {{ total_page }}</label>
 				{% if links.prev %}
 					<form action="" method="GET" class="page_form">{% csrf_token %}
 						<input type="hidden" name="page_link" value="{{ links.prev }}">
