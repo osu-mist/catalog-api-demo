@@ -20,7 +20,7 @@ headers               = {'Authorization': 'Bearer ' + access_token}
 
 
 def get_term_code(year, term):
-	if not year or term == 'all':
+	if not year:
 		return None
 
 	term_codes = {'fall': '01', 'winter': '02', 'spring': '03', 'summer': '04'}
@@ -90,6 +90,8 @@ def class_search_api(request):
 		request_url = 'https://oregonstateuniversity-dev.apigee.net/' + re.findall(r'^https://api.oregonstate.edu/(.*)', page_link)[0]  # should be fixed in backend API
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
+	else:
+		render(request, 'catalog_api_demo/terms_api_index.html', locals())
 
 	if links:
 		total_page   = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['last']))[0]
@@ -155,6 +157,8 @@ def terms_api(request):
 		request_url = 'https://oregonstateuniversity-dev.apigee.net/' + re.findall(r'^https://api.oregonstate.edu/(.*)', page_link)[0]  # should be fixed in backend API
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
+	else:
+		return render(request, 'catalog_api_demo/terms_api_index.html', locals())
 
 	if links:
 		total_page   = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['last']))[0]

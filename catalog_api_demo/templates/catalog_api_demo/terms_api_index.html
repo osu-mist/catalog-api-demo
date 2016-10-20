@@ -16,6 +16,10 @@
 		<table>
 			{% if form.is_valid %}
 			<tr>
+				<th><label for="is_all">All:</label></th>
+				<td>{{ form.is_all }}</td>
+			</tr>
+			<tr>
 				<th><label for="is_open">Open:</label></th>
 				<td>{{ form.is_open }}</td>
 			</tr>
@@ -35,6 +39,37 @@
 				<th><label for="page_num">Page Number:</label></th>
 				<td>{{ form.page_num }}</td> 
 			</tr>
+			{% else %}
+			<tr>
+				<th><label for="is_all">All:</label></th>
+				<td><input type="checkbox" name="is_all" id="id_is_all"></td> 
+			</tr>
+			<tr>
+				<th><label for="is_open">Open:</label></th>
+				<td><input type="checkbox" name="is_open" id="id_is_open"></td> 
+			</tr>
+			<tr>
+				<th><label for="year">Year:</label></th>
+				<td><input type="text" name="year" value="2016" id="id_year"></td> 
+			</tr>
+			<tr>
+				<th><label for="term">Term:</label></th>
+				<td>
+					<ul id="id_term">
+						<li><label><input class="term-list" type="radio" name="term" value="fall" checked> Fall</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="winter"> Winter</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="spring"> Spring</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="summer"> Summer</label></li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<th><label for="page_size">Page Size:</label></th>
+				<td><input type="text" name="page_size" placeholder="10 (Default)" id="id_page_size"></td> 
+			</tr>
+			<tr>
+				<th><label for="page_num">Page Number:</label></th>
+				<td><input type="text" name="page_num" placeholder="1 (Default)" id="id_page_num"></td> 
 			{% endif %}
 		</table>
 	<input type="submit" value="Submit">

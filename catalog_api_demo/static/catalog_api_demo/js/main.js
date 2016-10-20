@@ -1,34 +1,34 @@
+function row_display(items, display) {
+	if (display == "hide") {
+		for (i=0; i<items.length; i++) {
+			$(items[i]).parent().parent().hide();
+		}
+	} else if (display == "show") {
+		for (i=0; i<items.length; i++) {
+			$(items[i]).parent().parent().show();
+		}
+	}
+}
+
+
 $(document).ready(function(){
 	var totle_count = $(".result:visible").length;
 	$("#totle_count").text(totle_count);
 
-	// hide unnecessary parameters
 	if ($("#id_is_open").is(":checked")) {
-		$("#id_year").parent().parent().hide();
-		$("#id_term").parent().parent().hide();
-		$("#id_page_size").parent().parent().hide();
-		$("#id_page_num").parent().parent().hide();
-	}	
+		row_display(["#id_is_all", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "hide");
+	} else if ($("#id_is_all").is(":checked")) {
+		row_display(["#id_is_open", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "hide");
+	}		
 
-	$("#id_is_open").click(function(){
-		if ($("#id_is_open").is(":checked")) {
-			$("#id_year").parent().parent().hide();
-			$("#id_term").parent().parent().hide();
-			$("#id_page_size").parent().parent().hide();
-			$("#id_page_num").parent().parent().hide();
-		} else {
-			$("#id_year").parent().parent().show();
-			$("#id_term").parent().parent().show();
-			$("#id_page_size").parent().parent().show();
-			$("#id_page_num").parent().parent().show();
+	$("input").click(function(){
+		if ($("#id_is_all").is(":checked")) {
+			row_display(["#id_is_open", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "hide");
 		}
-	});
-
-	$("#id_term").click(function(){
-		if ($("#id_term_4").is(":checked")) {
-			$("#id_year").parent().parent().hide();
+		else if ($("#id_is_open").is(":checked")) {
+			row_display(["#id_is_all", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "hide");
 		} else {
-			$("#id_year").parent().parent().show();
+			row_display(["#id_is_all", "#id_is_open", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "show");
 		}
 	});
 
