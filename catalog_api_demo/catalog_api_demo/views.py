@@ -80,6 +80,9 @@ def class_search_api(request):
 		request_url = get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num)
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
+		if links:
+			total_page   = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['last']))[0]
+			current_page = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['self']))[0]
 	else:
 		if DEBUG:
 			print "Form is not valid."
@@ -116,10 +119,10 @@ def get_term_url(request_url, term_code, is_all, is_open, page_size, page_num):
 	params      = {'page[size]': page_size, 'page[number]': page_num}
 
 	if is_all:
-		return request_url
-	if is_open:
-		return request_url + '/open'
-	if term_code:
+		request_url = request_url
+	elif is_open:
+		request_url += '/open'
+	elif term_code:
 		request_url += '/' + term_code
 
 	url_parts    = list(urlparse.urlparse(request_url))
@@ -150,6 +153,9 @@ def terms_api(request):
 		request_url = get_term_url(request_url, term_code, is_all, is_open, page_size, page_num)
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
+		if links:
+			total_page   = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['last']))[0]
+			current_page = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['self']))[0]
 	else:
 		if DEBUG:
 			print "Form is not valid."
@@ -161,7 +167,7 @@ def terms_api(request):
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
 	else:
-		return render(request, 'catalog_api_demo/terms_api_index.html', locals())
+		return render(request, 'catalog_api_demo/terms_api_index.html', locals(), {'form': form})
 
 	if links:
 		total_page   = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['last']))[0]

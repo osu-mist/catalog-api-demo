@@ -13,6 +13,7 @@ function row_display(items, display) {
 
 $(document).ready(function(){
 	var totle_count = $(".result:visible").length;
+	console.log(totle_count);
 	$("#totle_count").text(totle_count);
 
 	if ($("#id_is_open").is(":checked")) {
