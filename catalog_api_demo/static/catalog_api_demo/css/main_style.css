@@ -5,10 +5,12 @@ body {
 
 table {
 	margin: 1em 0px;
+	width: 50%;
 }
 
 table tr th {
 	padding: 0.5em;
+	width: 30%;
 }
 
 table tr td ul{
@@ -21,6 +23,14 @@ table tr td ul li {
 	list-style-type: none;
 	float: left;
 }
+
+	form table {
+		width: 40%;
+	}
+
+	form table tr th {
+		width: 20%;
+	}
 
 button a {
 	color: black;

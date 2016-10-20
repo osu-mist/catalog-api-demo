@@ -110,11 +110,13 @@ def course_subjects_api(request):
 	return render(request, 'catalog_api_demo/course_subjects_api_index.html', locals())
 
 
-def get_term_url(request_url, term_code, is_open, page_size, page_num):
+def get_term_url(request_url, term_code, is_all, is_open, page_size, page_num):
 	endpoint    = '/terms'
 	request_url += endpoint
 	params      = {'page[size]': page_size, 'page[number]': page_num}
 
+	if is_all:
+		return request_url
 	if is_open:
 		return request_url + '/open'
 	if term_code:
@@ -141,10 +143,11 @@ def terms_api(request):
 		year        = form.cleaned_data['year']
 		term        = form.cleaned_data['term']
 		term_code   = get_term_code(year, term)
+		is_all      = form.cleaned_data['is_all']
 		is_open     = form.cleaned_data['is_open']
 		page_size   = form.cleaned_data['page_size']
 		page_num    = form.cleaned_data['page_num']
-		request_url = get_term_url(request_url, term_code, is_open, page_size, page_num)
+		request_url = get_term_url(request_url, term_code, is_all, is_open, page_size, page_num)
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
 	else:
