@@ -46,38 +46,38 @@
 			{% else %}
 			<tr>
 				<th><label for="year">* Year:</label></th>
-				<td><input type="text" name="year" value="2016" required></td> 
+				<td><input type="text" name="year" value={% if year %} "{{ year }}" {% else %} "2016" {% endif %} required></td> 
 			</tr>
 			<tr>
 				<th><label for="term">* Term:</label></th>
 				<td>
 					<ul>
-						<li><label><input class="term-list" type="radio" name="term" value="fall" checked> Fall</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="winter"> Winter</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="spring"> Spring</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="summer"> Summer</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="fall" {% if term == "fall" or not term %} checked {% endif %}> Fall</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="winter" {% if term == "winter" %} checked {% endif %}> Winter</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="spring" {% if term == "spring" %} checked {% endif %}> Spring</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="summer" {% if term == "summer" %} checked {% endif %}> Summer</label></li>
 					</ul>
 				</td>
 			</tr>
 			<tr>
 				<th><label for="subject">* Subject:</label></th>
-				<td><input type="text" name="subject" value="CS" required></td> 
+				<td><input type="text" name="subject" value={% if subject %} "{{ subject }}" {% else %} "CS" {% endif %} required></td> 
 			</tr>
 			<tr>
 				<th><label for="course_num">&nbsp;&nbsp;Course Number:</label></th>
-				<td><input type="text" name="course_num"></td> 
+				<td><input type="text" name="course_num" {% if course_num %} value="{{ course_num }}" {% endif %}></td> 
 			</tr>
 			<tr>
 				<th><label for="q">&nbsp;&nbsp;Query:</label></th>
-				<td><input type="text" name="q"></td> 
+				<td><input type="text" name="q" {% if q %} value="{{ q }}" {% endif %}></td> 
 			</tr>
 			<tr>
 				<th><label for="page_size">&nbsp;&nbsp;Page Size:</label></th>
-				<td><input type="text" name="page_size" placeholder="10 (Default)"></td> 
+				<td><input type="text" name="page_size" placeholder="10 (Default)" value={% if page_size %} "{{ page_size }}" {% else %} "10" {% endif %}></td> 
 			</tr>
 			<tr>
 				<th><label for="page_num">&nbsp;&nbsp;Page Number:</label></th>
-				<td><input type="text" name="page_num" placeholder="1 (Default)"></td> 
+				<td><input type="text" name="page_num" placeholder="1 (Default)" value={% if page_num %} "{{ page_num }}" {% else %} "1" {% endif %}></td> 
 			</tr>
 			{% endif %}
 		</table>

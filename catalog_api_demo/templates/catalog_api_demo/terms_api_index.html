@@ -65,11 +65,11 @@
 			</tr>
 			<tr>
 				<th><label for="page_size">Page Size:</label></th>
-				<td><input type="text" name="page_size" placeholder="10 (Default)" id="id_page_size" value="{{ page_size }}"></td> 
+				<td><input type="text" name="page_size" placeholder="10 (Default)" id="id_page_size" value={% if page_size %} "{{ page_size }}" {% else %} "10" {% endif %}></td> 
 			</tr>
 			<tr>
 				<th><label for="page_num">Page Number:</label></th>
-				<td><input type="text" name="page_num" placeholder="1 (Default)" id="id_page_num" value="{{ page_num }}"></td> 
+				<td><input type="text" name="page_num" placeholder="1 (Default)" id="id_page_num" value={% if page_num %} "{{ page_num }}" {% else %} "1" {% endif %}></td> 
 			{% endif %}
 		</table>
 	<input type="submit" value="Submit">

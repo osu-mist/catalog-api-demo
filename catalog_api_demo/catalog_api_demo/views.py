@@ -97,6 +97,14 @@ def class_search_api(request):
 	if page_form.is_valid():
 		page_link   = uri_to_iri(page_form.cleaned_data['page_link'])
 		request_url = 'https://oregonstateuniversity-dev.apigee.net/' + re.findall(r'^https://api.oregonstate.edu/(.*)', page_link)[0]  # should be fixed in backend API
+		params      = urlparse.parse_qs(urlparse.urlparse(request_url).query)
+		termcode    = re.findall(r'^' + re.escape(api_url) + '/(\d)*', request_url)[0]
+		year, term  = decode_term_code(termcode)
+		subject     = params['subject'][0]
+		course_num  = params['courseNumber'][0] if 'courseNumber' in params else None
+		q           = params['q'][0] if 'q' in params else None
+		page_size   = params['page[size]'][0]
+		page_num    = params['page[number]'][0]
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
 	else:
@@ -170,7 +178,7 @@ def terms_api(request):
 	if page_form.is_valid():
 		page_link   = uri_to_iri(page_form.cleaned_data['page_link'])
 		request_url = 'https://oregonstateuniversity-dev.apigee.net/' + re.findall(r'^https://api.oregonstate.edu/(.*)', page_link)[0]  # should be fixed in backend API
-		params = urlparse.parse_qs(urlparse.urlparse(request_url).query)
+		params      = urlparse.parse_qs(urlparse.urlparse(request_url).query)
 		is_all      = True if re.match(r'^' + re.escape(api_url) + '/terms\?', request_url) else False
 		is_open     = True if re.match(r'^' + re.escape(api_url) + '/terms/open\?', request_url) else False
 		termcode    = re.findall(r'^' + re.escape(api_url) + '/terms(\d)*', request_url)[0]
