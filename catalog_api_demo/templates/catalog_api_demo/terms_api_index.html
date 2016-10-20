@@ -42,34 +42,34 @@
 			{% else %}
 			<tr>
 				<th><label for="is_all">All:</label></th>
-				<td><input type="checkbox" name="is_all" id="id_is_all"></td> 
+				<td><input type="checkbox" name="is_all" id="id_is_all" {% if is_all %} checked {% endif %}></td> 
 			</tr>
 			<tr>
 				<th><label for="is_open">Open:</label></th>
-				<td><input type="checkbox" name="is_open" id="id_is_open"></td> 
+				<td><input type="checkbox" name="is_open" id="id_is_open" {% if is_open %} checked {% endif %}></td> 
 			</tr>
 			<tr>
 				<th><label for="year">Year:</label></th>
-				<td><input type="text" name="year" value="2016" id="id_year"></td> 
+				<td><input type="text" name="year" id="id_year" value={% if year %} "{{ year }}" {% else %} "2016" {% endif %}></td> 
 			</tr>
 			<tr>
 				<th><label for="term">Term:</label></th>
 				<td>
 					<ul id="id_term">
-						<li><label><input class="term-list" type="radio" name="term" value="fall" checked> Fall</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="winter"> Winter</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="spring"> Spring</label></li>
-						<li><label><input class="term-list" type="radio" name="term" value="summer"> Summer</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="fall" {% if term == "fall" or not term %} checked {% endif %}> Fall</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="winter" {% if term == "winter" %} checked {% endif %}> Winter</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="spring" {% if term == "spring" %} checked {% endif %}> Spring</label></li>
+						<li><label><input class="term-list" type="radio" name="term" value="summer" {% if term == "summer" %} checked {% endif %}> Summer</label></li>
 					</ul>
 				</td>
 			</tr>
 			<tr>
 				<th><label for="page_size">Page Size:</label></th>
-				<td><input type="text" name="page_size" placeholder="10 (Default)" id="id_page_size"></td> 
+				<td><input type="text" name="page_size" placeholder="10 (Default)" id="id_page_size" value="{{ page_size }}"></td> 
 			</tr>
 			<tr>
 				<th><label for="page_num">Page Number:</label></th>
-				<td><input type="text" name="page_num" placeholder="1 (Default)" id="id_page_num"></td> 
+				<td><input type="text" name="page_num" placeholder="1 (Default)" id="id_page_num" value="{{ page_num }}"></td> 
 			{% endif %}
 		</table>
 	<input type="submit" value="Submit">

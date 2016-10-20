@@ -19,17 +19,23 @@ api_url, access_token = get_access_token(config_file)
 headers               = {'Authorization': 'Bearer ' + access_token}
 
 
-def get_term_code(year, term):
+def encode_term_code(year, term):
 	if not year:
 		return None
-
 	term_codes = {'fall': '01', 'winter': '02', 'spring': '03', 'summer': '04'}
 	term_idx   = term_codes[term]
-
-	if term == 'fall':
-		year = int(year) + 1
+	year       = str(int(year) + 1) if term == 'fall' else year
 	term_code  = str(year) + term_idx
 	return term_code
+
+
+def decode_term_code(termcode):
+	if not termcode:
+		return None, None
+	term_codes = {'01': 'fall', '02': 'winter', '03': 'spring', '04': 'summer'}
+	term       = term_codes[termcode[4:6]]
+	year       = str(int(termcode[0:4]) - 1) if term == 'fall' else termcode[0:4]
+	return year, term
 
 
 def get_courses_url(request_url, term_code, subject, course_num, q, page_size, page_num):
@@ -71,7 +77,7 @@ def class_search_api(request):
 	if form_is_valid:
 		year        = form.cleaned_data['year']
 		term        = form.cleaned_data['term']
-		term_code   = get_term_code(year, term)
+		term_code   = encode_term_code(year, term)
 		subject     = form.cleaned_data['subject'].upper()
 		course_num  = form.cleaned_data['course_num']
 		q           = form.cleaned_data['q']
@@ -145,7 +151,7 @@ def terms_api(request):
 	if form_is_valid:
 		year        = form.cleaned_data['year']
 		term        = form.cleaned_data['term']
-		term_code   = get_term_code(year, term)
+		term_code   = encode_term_code(year, term)
 		is_all      = form.cleaned_data['is_all']
 		is_open     = form.cleaned_data['is_open']
 		page_size   = form.cleaned_data['page_size']
@@ -164,6 +170,13 @@ def terms_api(request):
 	if page_form.is_valid():
 		page_link   = uri_to_iri(page_form.cleaned_data['page_link'])
 		request_url = 'https://oregonstateuniversity-dev.apigee.net/' + re.findall(r'^https://api.oregonstate.edu/(.*)', page_link)[0]  # should be fixed in backend API
+		params = urlparse.parse_qs(urlparse.urlparse(request_url).query)
+		is_all      = True if re.match(r'^' + re.escape(api_url) + '/terms\?', request_url) else False
+		is_open     = True if re.match(r'^' + re.escape(api_url) + '/terms/open\?', request_url) else False
+		termcode    = re.findall(r'^' + re.escape(api_url) + '/terms(\d)*', request_url)[0]
+		year, term  = decode_term_code(termcode)
+		page_size   = params['page[size]'][0]
+		page_num    = params['page[number]'][0]
 		response    = requests.get(request_url, headers=headers)
 		data, links = get_details(response)
 	else:
@@ -173,7 +186,7 @@ def terms_api(request):
 		total_page   = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['last']))[0]
 		current_page = re.findall(r'page\[number\]=(\d+)', uri_to_iri(links['self']))[0]
 
-	return render(request, 'catalog_api_demo/terms_api_index.html', locals(), {'form': form})
+	return render(request, 'catalog_api_demo/terms_api_index.html', locals(), {'form': page_form})
 
 
 def catalog_api(request):

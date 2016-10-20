@@ -2,6 +2,7 @@ from django import forms
 
 term_choices = (('fall', 'Fall'), ('winter', 'Winter'), ('spring', 'Spring'), ('summer', 'Summer'))
 
+
 class CourseForm(forms.Form):
 	year       = forms.CharField(label='Year', required=True)
 	term       = forms.ChoiceField(label='Term', widget=forms.RadioSelect, choices=term_choices, required=True)
