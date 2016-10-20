@@ -17,19 +17,19 @@ $(document).ready(function(){
 	$("#totle_count").text(totle_count);
 
 	if ($("#id_is_open").is(":checked")) {
-		row_display(["#id_is_all", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "hide");
+		row_display(["#id_is_all", "#id_year", "#id_term"], "hide");
 	} else if ($("#id_is_all").is(":checked")) {
-		row_display(["#id_is_open", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "hide");
+		row_display(["#id_is_open", "#id_year", "#id_term"], "hide");
 	}		
 
 	$("input").click(function(){
 		if ($("#id_is_all").is(":checked")) {
-			row_display(["#id_is_open", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "hide");
+			row_display(["#id_is_open", "#id_year", "#id_term"], "hide");
 		}
 		else if ($("#id_is_open").is(":checked")) {
-			row_display(["#id_is_all", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "hide");
+			row_display(["#id_is_all", "#id_year", "#id_term"], "hide");
 		} else {
-			row_display(["#id_is_all", "#id_is_open", "#id_year", "#id_term", "#id_page_size", "#id_page_num"], "show");
+			row_display(["#id_is_all", "#id_is_open", "#id_year", "#id_term"], "show");
 		}
 	});
 
