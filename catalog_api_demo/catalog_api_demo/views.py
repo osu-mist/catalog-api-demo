@@ -98,7 +98,7 @@ def class_search_api(request):
 		page_link   = uri_to_iri(page_form.cleaned_data['page_link'])
 		request_url = 'https://oregonstateuniversity-dev.apigee.net/' + re.findall(r'^https://api.oregonstate.edu/(.*)', page_link)[0]  # should be fixed in backend API
 		params      = urlparse.parse_qs(urlparse.urlparse(request_url).query)
-		termcode    = re.findall(r'^' + re.escape(api_url) + '/(\d)*', request_url)[0]
+		termcode    = params['term'][0]
 		year, term  = decode_term_code(termcode)
 		subject     = params['subject'][0]
 		course_num  = params['courseNumber'][0] if 'courseNumber' in params else None
