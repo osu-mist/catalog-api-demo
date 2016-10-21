@@ -139,7 +139,7 @@
 					</table>
 				{% endfor %}
 			</div>
-			{% else %}
+			{% elif form.is_valid %}
 				<h3>Nothing Matched Your Search</h3>
 			{% endif %}
 
