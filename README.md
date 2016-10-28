@@ -38,3 +38,18 @@ Usage
     ```
 
 2. While the server is running locally, visit `http://127.0.0.1:8000/catalog_api_demo/` with your Web browser.
+
+Docker
+------
+
+1. Build the docker image by running:
+	
+	```
+	docker build --tag="catalog_api_demo" .
+	```
+
+2. Run the docker container:
+	
+	```
+	docker run --name=catalog_api_demo --publish 8000:8000 catalog_api_demo
+	```
