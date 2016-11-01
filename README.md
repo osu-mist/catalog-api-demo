@@ -151,7 +151,7 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 4. Now you should be able to access the service through `worker node`:
 
 	```
-	$ curl -I http://<worker_ip>:8000/catalog_api_demo/
+	$ curl -I http://<manager_ip>:8000/catalog_api_demo/
 
 	HTTP/1.0 200 OK
 	Date: Tue, 01 Nov 2016 17:16:51 GMT
