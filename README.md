@@ -148,7 +148,7 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 	<service_id>  catalog_api_demo  1/4       catalog_api_demo
 	```
 
-4. Now you should be able to access the service through `worker node`:
+4. Now you should be able to access the service through `manager node`:
 
 	```
 	$ curl -I http://<manager_ip>:8000/catalog_api_demo/
