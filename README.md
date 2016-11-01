@@ -125,11 +125,19 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 
 1. Clone this repo to your `manager node` and prepare a proper `configuration.json` file.
 
-2. Create a catalog_api_demo service on your `manager node`:
+2. Build the `catalog_api_demo` image in you manager machine:
 
 	```
-	$ docker-machine ssh manager docker service create --name catalog_api_demo --publish 8000:8000 catalog_api_demo
+	docker-machine ssh manager docker build --tag="catalog_api_demo" <path_to_catalog_api_demo_repo>
 	```
+
+2. Create a `catalog_api_demo` service on your `manager node`:
+
+	```
+	$ docker-machine ssh manager docker service create --name catalog_api_demo --replicas 4 --publish 8000:8000 catalog_api_demo
+	```
+
+	_* Note that `--replicas` is the number of instances of the image specified._
 
 3. You can list all services on you `manager node`:
 
@@ -137,7 +145,7 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 	$ docker-machine ssh manager docker service ls
 
 	ID            NAME              REPLICAS  IMAGE             COMMAND
-	<service_id>  catalog_api_demo  1/1       catalog_api_demo
+	<service_id>  catalog_api_demo  1/4       catalog_api_demo
 	```
 
 4. Now you should be able to access the service through `worker node`:
