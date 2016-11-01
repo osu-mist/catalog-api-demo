@@ -11,7 +11,7 @@ Installation
 ------------
 
 This application is implemented with [Django](https://www.djangoproject.com/) framework ([version 1.10.1](https://docs.djangoproject.com/en/1.10/releases/1.10.1/)), so make sure you have installed Django first. You can simply install it with [pip](https://pip.pypa.io/en/latest/):
-    
+	
 ```
 $ pip install Django==1.10.1
 ```
@@ -22,20 +22,20 @@ Configuration
 1. Register your application to use the Class Search API, Course Subjects API, and Terms API at the [OSU Developer Portal](https://developer.oregonstate.edu/).
 2. Put your `configuration.json` file which contains `client_id` and `client_secret` in the root folder of this application.
 
-    ```json
-    "client_id": "secret",
-    "client_secret": "sauce"
-    ```
+	```json
+	"client_id": "secret",
+	"client_secret": "sauce"
+	```
 
 Usage
 -----
 
 1. Execute the following commands to run the server:
 
-    ```
-    $ cd catalog_api_demo
-    $ python manage.py runserver
-    ```
+	```
+	$ cd catalog_api_demo
+	$ python manage.py runserver
+	```
 
 2. While the server is running locally, visit `http://127.0.0.1:8000/catalog_api_demo/` with your Web browser.
 
@@ -85,15 +85,15 @@ Now we are going to login into the manager machine and have it become the `manag
 
 ```
 $ MANAGER_IP=$(docker-machine ip manager)
-$ docker-machine ssh manager docker swarm init --listen-addr $MANAGER_IP:2377 --advertise-addr $MANAGER_IP:2377
+$ docker-machine ssh manager docker swarm init --advertise-addr $MANAGER_IP:2377
 
 Swarm initialized: current node (<node_id>) is now a manager.
 
 To add a worker to this swarm, run the following command:
 
-    docker swarm join \
-    --token <token> \
-    <manager_ip>:2377
+	docker swarm join \
+	--token <token> \
+	<manager_ip>:2377
 
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
@@ -121,3 +121,33 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 <workder_node_id>    worker    Ready   Active
 ```
 
+### Deploy a service to worker nodes
+
+1. Clone this repo to your `manager node` and prepare a proper `configuration.json` file.
+
+2. Create a catalog_api_demo service on your `manager node`:
+
+	```
+	$ docker-machine ssh manager docker service create --name catalog_api_demo --publish 8000:8000 catalog_api_demo
+	```
+
+3. You can list all services on you `manager node`:
+
+	```
+	$ docker-machine ssh manager docker service ls
+
+	ID            NAME              REPLICAS  IMAGE             COMMAND
+	<service_id>  catalog_api_demo  1/1       catalog_api_demo
+	```
+
+4. Now you should be able to access the service through `worker node`:
+
+	```
+	$ curl -I http://<worker_ip>:8000/catalog_api_demo/
+
+	HTTP/1.0 200 OK
+	Date: Tue, 01 Nov 2016 17:16:51 GMT
+	Server: WSGIServer/0.1 Python/2.7.12
+	X-Frame-Options: SAMEORIGIN
+	Content-Type: text/html; charset=utf-8
+	```
