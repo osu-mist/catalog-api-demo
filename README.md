@@ -125,7 +125,7 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 
 1. Clone this repo to your `manager node` and prepare a proper `configuration.json` file.
 
-2. Build the `catalog_api_demo` image in you manager machine:
+2. Build the `catalog_api_demo` image in you `manager node`:
 
 	```
 	docker-machine ssh manager docker build --tag="catalog_api_demo" <path_to_catalog_api_demo_repo>
