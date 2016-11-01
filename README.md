@@ -109,7 +109,7 @@ $ WORKER_IP=$(docker-machine ip worker)
 $ docker-machine ssh worker docker swarm join --token <token> $WORKER_IP:2377
 ```
 
-### List all nodes in the swarm
+#### List all nodes in the swarm
 
 You are allowed to check every nodes status in a swarm.
 
@@ -121,7 +121,7 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 <workder_node_id>    worker    Ready   Active
 ```
 
-### Deploy a service to worker nodes
+#### Deploy a service to worker nodes
 
 1. Clone this repo to your `manager node` and prepare a proper `configuration.json` file.
 
