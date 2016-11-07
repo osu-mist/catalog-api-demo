@@ -47,11 +47,13 @@ Docker (1.12.1)
 	```
 	$ docker build --tag="catalog_api_demo" .
 	```
+	
+	**Warning:** Do not put your `configuration.json` file in the root of the application when building the image. You should mount the configuration file as a readonly volume.
 
 2. Run the docker container:
 	
 	```
-	$ docker run --name=catalog_api_demo --publish 8000:8000 catalog_api_demo
+	$ docker run --name=catalog_api_demo --publish 8000:8000 --volume /path/to/configuration.json:/demo/catalog-api-demo/configuration.json:ro catalog_api_demo
 	```
 
 Docker Swarm (1.2.5)
@@ -134,7 +136,7 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 2. Create a `catalog_api_demo` service on your `manager node`:
 
 	```
-	$ docker-machine ssh manager docker service create --name catalog_api_demo --replicas 4 --publish 8000:8000 catalog_api_demo
+	$ docker-machine ssh manager docker service create --name catalog_api_demo --replicas 4 --publish 8000:8000 --volume /path/to/configuration.json:/demo/catalog-api-demo/configuration.json:ro catalog_api_demo
 	```
 
 	_* Note that `--replicas` is the number of instances of the image specified._
