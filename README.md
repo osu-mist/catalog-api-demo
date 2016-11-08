@@ -223,7 +223,7 @@ ID                     HOSTNAME   STATUS  AVAILABILITY  MANAGER STATUS
 	$ docker-machine ssh manager01 docker service ls
 
 	ID            NAME              REPLICAS  IMAGE             COMMAND
-	<service_id>  catalog_api_demo  1/10      catalog_api_demo
+	<service_id>  catalog_api_demo  3/15      catalog_api_demo
 	```
 
 4. Now you should be able to access the service through `manager01`:
@@ -237,3 +237,5 @@ ID                     HOSTNAME   STATUS  AVAILABILITY  MANAGER STATUS
 	X-Frame-Options: SAMEORIGIN
 	Content-Type: text/html; charset=utf-8
 	```
+
+_* Note that in order to handle the situation if the leader node (primary manager node) down in some reason, we should build the images on multiple manager nodes. However, it is no need to create multiple services on them. Be aware that in three-manager swarm, the maximum loss of manager is only one._
