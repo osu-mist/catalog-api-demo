@@ -190,42 +190,46 @@ ID                     HOSTNAME   STATUS  AVAILABILITY  MANAGER STATUS
 <worker07_node_id>     worker07   Ready   Active
 ```
 
-#### Deploy a service to worker nodes
+#### Deploy a service to manager nodes
 
 1. Clone this repo to your `manager node` and prepare a proper `configuration.json` file.
 
-2. Build the `catalog_api_demo` image in you `manager node`:
+2. Build the `catalog_api_demo` image on you `manager01`:
 
 	```
-	docker-machine ssh manager docker build --tag="catalog_api_demo" /path/to/catalog_api_demo
+	docker-machine ssh manager01 docker build --tag="catalog_api_demo" /path/to/catalog-api-demo
 	```
 
-2. Create a `catalog_api_demo` service on your `manager node`:
+2. Create a `catalog_api_demo` service on your `manager01`:
 
 	```
-	$ docker-machine ssh manager docker service create \
+	$ docker-machine ssh manager01 docker service create \
 	> --name catalog_api_demo \
-	> --replicas 4 \
+	> --replicas 10 \
 	> --publish 8000:8000 \
 	> --mount type=bind,src=/path/to/configuration.json,dst=/demo/catalog-api-demo/configuration.json,readonly \
 	> catalog_api_demo
 	```
 
-	_* Note that `--replicas` is the number of instances of the image specified._
-
-3. You can list all services on you `manager node`:
+	_* Note that `--replicas` is the number of instances of the image specified. You can scale your services by using the following command:_
 
 	```
-	$ docker-machine ssh manager docker service ls
+	$ docker-machine ssh manager01 docker service scale catalog_api_demo=<number_of_replicas>
+	```
+
+3. You can list all services on you `manager01`:
+
+	```
+	$ docker-machine ssh manager01 docker service ls
 
 	ID            NAME              REPLICAS  IMAGE             COMMAND
-	<service_id>  catalog_api_demo  1/4       catalog_api_demo
+	<service_id>  catalog_api_demo  1/10      catalog_api_demo
 	```
 
-4. Now you should be able to access the service through `manager node`:
+4. Now you should be able to access the service through `manager01`:
 
 	```
-	$ curl -I http://<manager_ip>:8000/catalog_api_demo/
+	$ curl -I http://<manager01_ip>:8000/catalog_api_demo/
 
 	HTTP/1.0 200 OK
 	Date: Tue, 01 Nov 2016 17:16:51 GMT
