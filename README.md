@@ -68,11 +68,20 @@ You can check you swarm version by running `docker run --rm swarm -v`.
 
 #### Create a swarm cluster
 
-Prepare multiple machines as nodes in swarm cluster. I am going to use [VirtulBox](https://www.virtualbox.org/) here to create one `manager node` and one `worker node` locally as an example. You can create as many nodes as you need.
+Prepare multiple machines as nodes in swarm cluster. I am going to use [VirtulBox](https://www.virtualbox.org/) here to create three `manager nodes` and seven `worker nodes` as an example. According to [Docker documentation](https://docs.docker.com/engine/swarm/how-swarm-mode-works/nodes/), it is recommended to have odd number of nodes according to the organization’s high-availability requirements.
+
+> * A three-manager swarm tolerates a maximum loss of one manager.
+> * An N manager cluster will tolerate the loss of at most (N-1)/2 managers.
+> * Docker recommends a maximum of seven manager nodes for a swarm.
 
 ```
-$ docker-machine create --driver virtualbox manager
-$ docker-machine create --driver virtualbox worker
+$ docker-machine create --driver virtualbox manager01
+$ docker-machine create --driver virtualbox manager02
+$ docker-machine create --driver virtualbox manager03
+$ docker-machine create --driver virtualbox worker01
+$ docker-machine create --driver virtualbox worker02
+...
+$ docker-machine create --driver virtualbox worker07
 ```
 
 After creating machines, you can list all machines you have by typing:
@@ -80,51 +89,105 @@ After creating machines, you can list all machines you have by typing:
 ```
 $ docker-machine ls
 
-NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER    ERRORS
-manager   -        virtualbox   Running   tcp://<manager_ip>:2376             v1.12.3
-worker    -        virtualbox   Running   tcp://<worker_ip>:2376              v1.12.3
+NAME        ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER    ERRORS
+manager01   -        virtualbox   Running   tcp://<manager01_ip>:2376           v1.12.3
+manager02   -        virtualbox   Running   tcp://<manager02_ip>:2376           v1.12.3
+manager03   -        virtualbox   Running   tcp://<manager03_ip>:2376           v1.12.3
+worker01    -        virtualbox   Running   tcp://<worker01_ip>:2376            v1.12.3
+worker02    -        virtualbox   Running   tcp://<worker02_ip>:2376            v1.12.3
+...
+worker07    -        virtualbox   Running   tcp://<worker07_ip>:2376            v1.12.3
 ```
 
 #### Initialize a swarm
 
-Now we are going to login into the manager machine and have it become the `manager node` in the swarm cluster.
+Now we are going to login into the manager machine and have it become the primary `manager node` in the swarm cluster.
 
 ```
-$ MANAGER_IP=$(docker-machine ip manager)
-$ docker-machine ssh manager docker swarm init --advertise-addr $MANAGER_IP:2377
+$ MANAGER01_IP=$(docker-machine ip manager01)
+$ docker-machine ssh manager01 docker swarm init --advertise-addr $MANAGER01_IP:2377
 
 Swarm initialized: current node (<node_id>) is now a manager.
 
 To add a worker to this swarm, run the following command:
 
 	docker swarm join \
-	--token <token> \
-	<manager_ip>:2377
+	--token <worker_node_token> \
+	<manager01_ip>:2377
 
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 ```
 
 Make sure you have the swarm token after you initializing it. We will need the token later, but please **DO NOT** store it as an environment variable. 
 
-#### Add nodes to the swarm
+#### Add manager nodes to the swarm
 
-We have already initialize a swarm with one `manager node` from previous step. Now we are going to add the worker machine as `worker node` to our swarm cluster.
+We can also add more `manager nodes` to our swarm.
 
 ```
-$ WORKER_IP=$(docker-machine ip worker)
-$ docker-machine ssh worker docker swarm join --token <token> $WORKER_IP:2377
+$ docker-machine ssh manager01 docker swarm join-token manager
+
+To add a manager to this swarm, run the following command:
+
+    docker swarm join \
+    --token <manager_node_token> \
+    <manager01_ip>:2377
 ```
+
+```
+$ docker-machine ssh manager02 docker swarm join \
+> --token <manager_node_token> \
+> <manager01_ip>:2377
+```
+
+Repeat this process to add all the other two managers to the cluster.
+
+#### Add worker nodes to the swarm
+
+The following is an example that adding `worker01`, `worker02` and `worker03` to `manager01`. Use the following command to get the token first:
+
+```
+$ docker-machine ssh manager01 docker swarm join-token worker
+
+To add a worker to this swarm, run the following command:
+
+	docker swarm join \
+	--token <worker_node_token> \
+	<manager01_ip>:2377
+```
+
+Now add `worker nodes` to `manager01`:
+
+```
+$ WORKER01_IP=$(docker-machine ip worker01)
+$ docker-machine ssh worker01 docker swarm join \
+> --token <worker_node_token> \
+> $MANAGER01_IP:2377
+```
+
+Repeat this process to construct our cluster structure as following:
+`worker01`, `worker02` and `worker03` to `manager01`;
+`worker04` and `worker05` to `manager02`;
+`worker06` and `worker07` to `manager03`
 
 #### List all nodes in the swarm
 
-You are allowed to check every nodes status in a swarm.
+You are allowed to check every nodes status in a swarm via the `manager node`.
 
 ```
-$ docker-machine ssh manager docker node ls
+$ docker-machine ssh manager01 docker node ls
 
-ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
-<manager_node_id> *  manager   Ready   Active        Leader
-<workder_node_id>    worker    Ready   Active
+ID                     HOSTNAME   STATUS  AVAILABILITY  MANAGER STATUS
+<manager01_node_id> *  manager01  Ready   Active        Leader
+<worker01_node_id>     worker01   Ready   Active
+<worker02_node_id>     worker02   Ready   Active
+<worker03_node_id>     worker03   Ready   Active
+<manager02_node_id>    manager02  Ready   Active        Reachable
+<worker04_node_id>     worker04   Ready   Active
+<worker05_node_id>     worker05   Ready   Active
+<manager03_node_id>    manager03  Ready   Active        Reachable
+<worker06_node_id>     worker06   Ready   Active
+<worker07_node_id>     worker07   Ready   Active
 ```
 
 #### Deploy a service to worker nodes
