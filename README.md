@@ -130,13 +130,13 @@ ID                   HOSTNAME  STATUS  AVAILABILITY  MANAGER STATUS
 2. Build the `catalog_api_demo` image in you `manager node`:
 
 	```
-	docker-machine ssh manager docker build --tag="catalog_api_demo" <path_to_catalog_api_demo_repo>
+	docker-machine ssh manager docker build --tag="catalog_api_demo" /path/to/catalog_api_demo
 	```
 
 2. Create a `catalog_api_demo` service on your `manager node`:
 
 	```
-	$ docker-machine ssh manager docker service create --name catalog_api_demo --replicas 4 --publish 8000:8000 --volume /path/to/configuration.json:/demo/catalog-api-demo/configuration.json:ro catalog_api_demo
+	$ docker-machine ssh manager docker service create --name catalog_api_demo --replicas 4 --publish 8000:8000 --mount type=bind,src=/path/to/configuration.json,dst=/demo/catalog-api-demo/configuration.json,readonly catalog_api_demo
 	```
 
 	_* Note that `--replicas` is the number of instances of the image specified._
