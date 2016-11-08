@@ -238,4 +238,4 @@ ID                     HOSTNAME   STATUS  AVAILABILITY  MANAGER STATUS
 	Content-Type: text/html; charset=utf-8
 	```
 
-_* Note that in order to handle the situation if the leader node (primary manager node) down in some reason, we should build the images on multiple manager nodes. However, it is no need to create multiple services on them. Be aware that in three-manager swarm, the maximum loss of manager is only one._
+_* Note that in order to handle the situation if the leader node (primary manager node) down for some reason, we should build the images on multiple manager nodes. However, it is no need to create multiple services on them. Be aware that in three-manager swarm, the maximum loss of manager is only one._
